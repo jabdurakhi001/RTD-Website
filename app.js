@@ -57,6 +57,28 @@ function parseCSVLine(line) {
   return result.map(val => val.replace(/^"|"$/g, '').trim());
 }
 
+// Convert Google Drive share links to direct image URLs
+function convertGoogleDriveUrl(url) {
+  if (!url) return '';
+
+  // Check if it's a Google Drive link
+  const drivePatterns = [
+    /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/,
+    /drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/,
+    /docs\.google\.com\/uc\?id=([a-zA-Z0-9_-]+)/
+  ];
+
+  for (const pattern of drivePatterns) {
+    const match = url.match(pattern);
+    if (match && match[1]) {
+      return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+    }
+  }
+
+  // If already a direct link or not a Google Drive link, return as-is
+  return url;
+}
+
 function transformSheetData(rawData) {
   const inventory = {
     trucks: [],
@@ -74,7 +96,7 @@ function transformSheetData(rawData) {
       price: row.price ? parseInt(row.price) : null,
       status: (row.status || 'available').toLowerCase(),
       location: row.location || '',
-      image: row.image || '',
+      image: convertGoogleDriveUrl(row.image || ''),
       description: row.description || '',
       highlights: row.highlights ? row.highlights.split(',').map(h => h.trim()) : [],
       // For trailers
@@ -951,16 +973,49 @@ class InventoryManager {
 
     let specsHtml = '';
     if (item.type === 'truck') {
-      specsHtml = '\n        <span class="spec"><strong>Year:</strong> ' + item.year + '</span>\n        <span class="spec"><strong>Make:</strong> ' + item.make + '</span>\n        <span class="spec"><strong>Model:</strong> ' + item.model + '</span>\n        <span class="spec"><strong>Mileage:</strong> ' + formatMileage(item.mileage) + '</span>\n      ';
+      specsHtml = '<span class="spec"><strong>Year:</strong> ' + item.year + '</span>' +
+        '<span class="spec"><strong>Make:</strong> ' + item.make + '</span>' +
+        '<span class="spec"><strong>Model:</strong> ' + item.model + '</span>' +
+        '<span class="spec"><strong>Mileage:</strong> ' + formatMileage(item.mileage) + '</span>';
     } else {
-      specsHtml = '\n        <span class="spec"><strong>Year:</strong> ' + item.year + '</span>\n        <span class="spec"><strong>Make:</strong> ' + item.make + '</span>\n        <span class="spec"><strong>Model:</strong> ' + item.model + '</span>\n        <span class="spec"><strong>Length:</strong> ' + item.lengthFt + ' ft</span>\n      ';
+      specsHtml = '<span class="spec"><strong>Year:</strong> ' + item.year + '</span>' +
+        '<span class="spec"><strong>Make:</strong> ' + item.make + '</span>' +
+        '<span class="spec"><strong>Model:</strong> ' + item.model + '</span>' +
+        '<span class="spec"><strong>Length:</strong> ' + item.lengthFt + ' ft</span>';
     }
 
     const highlightsHtml = item.highlights.map(function(h) {
       return '<li>' + h + '</li>';
     }).join('');
 
-    return '\n      <div class="inventory-card" data-id="' + item.id + '">\n        <div class="card-image">\n          <div class="image-placeholder">\n            <span class="placeholder-icon">&#128666;</span>\n            <span class="placeholder-text">' + item.year + ' ' + item.make + ' ' + item.model + '</span>\n          </div>\n          <span class="status-badge ' + statusClass + '">' + statusText + '</span>\n        </div>\n        <div class="card-content">\n          <h3 class="card-title">' + item.year + ' ' + item.make + ' ' + item.model + '</h3>\n          <p class="card-location">' + item.location + '</p>\n          <div class="card-specs">' + specsHtml + '</div>\n          <p class="card-description">' + item.description + '</p>\n          <ul class="card-highlights">' + highlightsHtml + '</ul>\n          <div class="card-footer">\n            <span class="card-price">' + formatPrice(item.price) + '</span>\n            <div class="card-actions">\n              <button class="btn btn-secondary btn-sm">Details</button>\n              <button class="btn btn-primary btn-sm">Contact</button>\n            </div>\n          </div>\n        </div>\n      </div>\n    ';
+    // Show actual image if available, otherwise show placeholder
+    let imageHtml = '';
+    if (item.image && item.image.trim() !== '') {
+      imageHtml = '<img src="' + item.image + '" alt="' + item.year + ' ' + item.make + ' ' + item.model + '" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=image-placeholder><span class=placeholder-icon>&#128666;</span><span class=placeholder-text>' + item.year + ' ' + item.make + ' ' + item.model + '</span></div>\'">';
+    } else {
+      imageHtml = '<div class="image-placeholder"><span class="placeholder-icon">&#128666;</span><span class="placeholder-text">' + item.year + ' ' + item.make + ' ' + item.model + '</span></div>';
+    }
+
+    return '<div class="inventory-card" data-id="' + item.id + '">' +
+      '<div class="card-image">' +
+        imageHtml +
+        '<span class="status-badge ' + statusClass + '">' + statusText + '</span>' +
+      '</div>' +
+      '<div class="card-content">' +
+        '<h3 class="card-title">' + item.year + ' ' + item.make + ' ' + item.model + '</h3>' +
+        '<p class="card-location">' + item.location + '</p>' +
+        '<div class="card-specs">' + specsHtml + '</div>' +
+        '<p class="card-description">' + item.description + '</p>' +
+        '<ul class="card-highlights">' + highlightsHtml + '</ul>' +
+        '<div class="card-footer">' +
+          '<span class="card-price">' + formatPrice(item.price) + '</span>' +
+          '<div class="card-actions">' +
+            '<button class="btn btn-secondary btn-sm">Details</button>' +
+            '<button class="btn btn-primary btn-sm">Contact</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
   }
 
   renderPagination(totalPages) {
