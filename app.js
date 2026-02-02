@@ -1,23 +1,122 @@
 // ============================================
-// INVENTORY DATA
+// GOOGLE SHEETS CONFIGURATION
 // ============================================
 
-const INVENTORY = {
+const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQKG0iRXlzOb2u5OffLyk07haEtgJsnRRiG9t97ZW60mUkLzPKDIxdyFL4RCCy67TDuEVkoTefM2LbT/pub?gid=0&single=true&output=csv';
+
+// Global inventory object - will be populated from Google Sheets
+let INVENTORY = {
+  trucks: [],
+  trailers: []
+};
+
+// ============================================
+// CSV PARSER AND DATA LOADER
+// ============================================
+
+function parseCSV(csvText) {
+  const lines = csvText.split('\n');
+  const headers = parseCSVLine(lines[0]);
+  const data = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    if (lines[i].trim() === '') continue;
+
+    const values = parseCSVLine(lines[i]);
+    const row = {};
+
+    headers.forEach((header, index) => {
+      row[header.trim().toLowerCase()] = values[index] ? values[index].trim() : '';
+    });
+
+    data.push(row);
+  }
+
+  return data;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      result.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current);
+
+  return result.map(val => val.replace(/^"|"$/g, '').trim());
+}
+
+function transformSheetData(rawData) {
+  const inventory = {
+    trucks: [],
+    trailers: []
+  };
+
+  rawData.forEach(row => {
+    const item = {
+      id: row.id || '',
+      type: (row.type || 'truck').toLowerCase(),
+      year: parseInt(row.year) || new Date().getFullYear(),
+      make: row.make || '',
+      model: row.model || '',
+      mileage: row.mileage ? parseInt(row.mileage) : null,
+      price: row.price ? parseInt(row.price) : null,
+      status: (row.status || 'available').toLowerCase(),
+      location: row.location || '',
+      image: row.image || '',
+      description: row.description || '',
+      highlights: row.highlights ? row.highlights.split(',').map(h => h.trim()) : [],
+      // For trailers
+      lengthFt: row.lengthft ? parseInt(row.lengthft) : (row.length ? parseInt(row.length) : 53)
+    };
+
+    if (item.type === 'trailer') {
+      inventory.trailers.push(item);
+    } else {
+      inventory.trucks.push(item);
+    }
+  });
+
+  return inventory;
+}
+
+async function loadInventoryFromSheet() {
+  try {
+    const response = await fetch(GOOGLE_SHEET_CSV_URL);
+    if (!response.ok) {
+      throw new Error('Failed to fetch inventory data');
+    }
+
+    const csvText = await response.text();
+    const rawData = parseCSV(csvText);
+    INVENTORY = transformSheetData(rawData);
+
+    console.log('Inventory loaded from Google Sheets:', INVENTORY);
+    return INVENTORY;
+  } catch (error) {
+    console.error('Error loading inventory:', error);
+    // Return empty inventory on error
+    return { trucks: [], trailers: [] };
+  }
+}
+
+// ============================================
+// FALLBACK DATA (used if Google Sheets fails)
+// ============================================
+
+const FALLBACK_INVENTORY = {
   trucks: [
-    {
-      id: 'T001',
-      type: 'truck',
-      year: 2022,
-      make: 'Freightliner',
-      model: 'Cascadia',
-      mileage: 125000,
-      price: 89500,
-      status: 'available',
-      location: 'Dallas, TX',
-      image: 'freightliner-cascadia.jpg',
-      description: 'Well-maintained Freightliner Cascadia with Detroit DD15 engine. Perfect for long-haul operations.',
-      highlights: ['Detroit DD15 Engine', 'Automatic Transmission', 'APU Installed', 'New Tires']
-    },
     {
       id: 'T002',
       type: 'truck',
@@ -299,6 +398,11 @@ const INVENTORY = {
   ]
 };
 
+// Use fallback if Google Sheets fails
+function useFallbackInventory() {
+  INVENTORY = FALLBACK_INVENTORY;
+}
+
 // ============================================
 // UTILITY FUNCTIONS
 // ============================================
@@ -520,10 +624,30 @@ class InventoryManager {
     this.itemsPerPage = 9;
   }
 
-  init() {
+  async init() {
     const salesPage = document.querySelector('.inventory-section');
     if (!salesPage) {
       return;
+    }
+
+    // Show loading state
+    const gridElement = document.getElementById('inventory-grid');
+    if (gridElement) {
+      gridElement.innerHTML = '<div class="loading-message"><p>Loading inventory...</p></div>';
+    }
+
+    // Load inventory from Google Sheets
+    try {
+      await loadInventoryFromSheet();
+
+      // If no data loaded, use fallback
+      if (INVENTORY.trucks.length === 0 && INVENTORY.trailers.length === 0) {
+        console.log('No data from Google Sheets, using fallback');
+        useFallbackInventory();
+      }
+    } catch (error) {
+      console.error('Failed to load from Google Sheets:', error);
+      useFallbackInventory();
     }
 
     this.bindEvents();
