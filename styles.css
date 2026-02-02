@@ -3492,3 +3492,211 @@ p:last-child {
   background-size: cover;
   background-position: center;
 }
+/* ==========================================================
+   SALES PAGE PATCH — aligns CSS with updated app.js + markup
+   Append this at the END of your stylesheet
+   ========================================================== */
+
+/* ---------- Buttons: map old utility button classes to design system ---------- */
+.btn.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: 2px solid transparent;
+}
+.btn.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn.btn-secondary {
+  background-color: var(--color-white);
+  color: var(--color-gray-700);
+  border: 1px solid var(--color-gray-300);
+}
+.btn.btn-secondary:hover {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-gray-400);
+}
+
+.btn.btn-sm {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+}
+
+/* ---------- Inventory Card: support app.js structure ---------- */
+.inventory-card .card-image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background-color: var(--color-gray-100);
+  overflow: hidden;
+}
+
+.inventory-card .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-base);
+}
+
+.inventory-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+/* Asset ID line */
+.card-id {
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-3);
+}
+.card-id strong {
+  color: var(--color-gray-800);
+}
+
+/* ---------- Status badge: support BOTH selector patterns ---------- */
+/* app.js output: <span class="status-badge status-available">Available</span> */
+.status-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  border-radius: var(--radius-md);
+  letter-spacing: 0.025em;
+}
+
+/* Accept both .status-badge.status-available and .status-badge.status-available-like */
+.status-badge.status-available,
+.status-badge.status-available-like,
+.status-badge.status-instock,
+.status-badge.status-in-stock,
+.status-badge.status-available {
+  background-color: var(--color-success);
+  color: var(--color-white);
+}
+.status-badge.status-pending {
+  background-color: var(--color-warning);
+  color: var(--color-gray-900);
+}
+.status-badge.status-sold {
+  background-color: var(--color-error);
+  color: var(--color-white);
+}
+
+/* ---------- Next Photo button (multi-image support) ---------- */
+.photo-next {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-gray-900);
+  background-color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(6px);
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.photo-next:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
+}
+
+/* ---------- Pagination: style the classes app.js actually renders ---------- */
+#pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+  margin-top: var(--space-10);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.pagination-btn {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-gray-600);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--color-gray-50);
+}
+
+.pagination-btn.active {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 var(--space-2);
+  color: var(--color-gray-400);
+}
+
+/* ---------- Filters: Asset ID search input (if present in sidebar/modal) ---------- */
+#asset-id-search {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+#asset-id-search:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+}
+
+/* ---------- No-results + Loading (ensure consistent spacing) ---------- */
+.no-results,
+.loading-message {
+  border-radius: var(--radius-xl);
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+}
+
+/* ---------- Optional: tighter card footer on small screens ---------- */
+@media (max-width: 420px) {
+  .card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .card-actions {
+    width: 100%;
+  }
+  .card-actions .btn {
+    flex: 1;
+  }
+}
