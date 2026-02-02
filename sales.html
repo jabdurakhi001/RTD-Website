@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Browse our inventory of trucks and trailers for sale. Right Truck Deal LLC offers quality pre-owned commercial vehicles with transparent pricing.">
-  <title>Sales Inventory | Right Truck Deal LLC</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Browse our current inventory of trucks and trailers. Right Truck Deal LLC offers rental, leasing, lease-to-purchase, and sales with transparent pricing and flexible terms."
+  />
+  <title>Inventory | Right Truck Deal LLC</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
+
+  <!-- NAVBAR -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="container">
       <a href="index.html" class="navbar-brand" aria-label="Right Truck Deal - Home">
@@ -19,16 +26,27 @@
         </svg>
         Right Truck Deal
       </a>
-      <ul class="navbar-nav" role="menubar">
+
+      <!-- Desktop nav: app.js expects .nav-menu -->
+      <ul class="navbar-nav nav-menu" role="menubar">
         <li role="none"><a href="index.html" role="menuitem">Home</a></li>
         <li role="none"><a href="sales.html" role="menuitem" class="active">Inventory</a></li>
         <li role="none"><a href="index.html#services" role="menuitem">Leasing</a></li>
         <li role="none"><a href="index.html#contact" role="menuitem">Financing</a></li>
         <li role="none"><a href="index.html#contact" role="menuitem">Contact</a></li>
       </ul>
-      <a href="index.html#contact" class="btn btn-primary navbar-cta">Contact Us</a>
-      <button class="navbar-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu-sales">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+      <a href="index.html#contact" class="btn btn-primary navbar-cta">Request Quote</a>
+
+      <!-- Mobile toggle: app.js expects .mobile-menu-toggle -->
+      <button
+        class="navbar-toggle mobile-menu-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu-sales"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -37,28 +55,32 @@
     </div>
   </nav>
 
+  <!-- Mobile Menu: app.js toggles .nav-menu (desktop), so we keep this + minimal CSS -->
   <div id="mobile-menu-sales" class="mobile-menu" aria-hidden="true">
     <ul class="mobile-menu-nav" role="menu">
       <li role="none"><a href="index.html" role="menuitem">Home</a></li>
-      <li role="none"><a href="sales.html" role="menuitem">Inventory</a></li>
+      <li role="none"><a href="sales.html" role="menuitem" class="active">Inventory</a></li>
       <li role="none"><a href="index.html#services" role="menuitem">Leasing</a></li>
       <li role="none"><a href="index.html#contact" role="menuitem">Financing</a></li>
       <li role="none"><a href="index.html#contact" role="menuitem">Contact</a></li>
     </ul>
-    <a href="index.html#contact" class="btn btn-primary btn-lg" style="width: 100%;">Contact Us</a>
+    <a href="index.html#contact" class="btn btn-primary btn-lg" style="width: 100%;">Request Quote</a>
   </div>
 
   <main>
+
+    <!-- Financing banner -->
     <section class="financing-banner">
       <div class="container">
         <div>
           <h2>Financing Assistance Available</h2>
-          <p>Need help buying? Get pre-approved today with our competitive rates.</p>
+          <p>Need help buying? We can connect qualified customers with third-party financing resources.</p>
         </div>
         <a href="index.html#contact" class="btn btn-white">Get Pre-Approved</a>
       </div>
     </section>
 
+    <!-- Inventory header -->
     <section class="inventory-header">
       <div class="container">
         <h1>Current Inventory</h1>
@@ -69,19 +91,39 @@
       </div>
     </section>
 
+    <!-- Inventory section -->
     <section class="inventory-section">
       <div class="container">
         <div class="inventory-layout">
+
+          <!-- Filters -->
           <aside class="filters-sidebar" aria-label="Inventory filters">
             <div class="filters-header">
               <h3>Filters</h3>
-              <button class="filters-reset" id="reset-filters">Reset All</button>
+              <button class="filters-reset" id="reset-filters" type="button">Reset All</button>
+            </div>
+
+            <!-- Asset ID search -->
+            <div class="filter-group" data-filter="assetid">
+              <div class="filter-group-header">
+                <h4>Asset ID</h4>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+              </div>
+              <div class="filter-group-content">
+                <input id="asset-id-search" type="text" placeholder="Example: T001 or TR010" aria-label="Search by Asset ID" />
+              </div>
             </div>
 
             <div class="filter-group" data-filter="year">
               <div class="filter-group-header">
                 <h4>Year</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
               </div>
               <div class="filter-group-content" id="year-filters"></div>
             </div>
@@ -89,7 +131,10 @@
             <div class="filter-group" data-filter="make">
               <div class="filter-group-header">
                 <h4>Make</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
               </div>
               <div class="filter-group-content" id="make-filters"></div>
             </div>
@@ -97,12 +142,15 @@
             <div class="filter-group" data-filter="mileage" id="mileage-filter-group">
               <div class="filter-group-header">
                 <h4>Mileage</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
               </div>
               <div class="filter-group-content">
                 <div class="filter-range">
-                  <input type="number" id="mileage-min" placeholder="Min" min="0" aria-label="Minimum mileage">
-                  <input type="number" id="mileage-max" placeholder="Any" min="0" aria-label="Maximum mileage">
+                  <input type="number" id="mileage-min" placeholder="Min" min="0" aria-label="Minimum mileage" />
+                  <input type="number" id="mileage-max" placeholder="Any" min="0" aria-label="Maximum mileage" />
                 </div>
               </div>
             </div>
@@ -110,34 +158,61 @@
             <div class="filter-group" data-filter="price">
               <div class="filter-group-header">
                 <h4>Price</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
               </div>
               <div class="filter-group-content">
                 <div class="filter-range">
-                  <input type="number" id="price-min" placeholder="Min $" min="0" aria-label="Minimum price">
-                  <input type="number" id="price-max" placeholder="Any" min="0" aria-label="Maximum price">
+                  <input type="number" id="price-min" placeholder="Min $" min="0" aria-label="Minimum price" />
+                  <input type="number" id="price-max" placeholder="Any" min="0" aria-label="Maximum price" />
                 </div>
               </div>
             </div>
 
-            <button class="btn btn-primary filters-apply" id="apply-filters">Apply Filters</button>
+            <button class="btn btn-primary filters-apply" id="apply-filters" type="button">Apply Filters</button>
 
             <div class="help-box">
               <div class="help-box-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
               </div>
               <h4>Need help searching?</h4>
-              <p>Our sales team can help you find the exact truck you need.</p>
-              <a href="index.html#contact">Contact Sales <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+              <p>Tell us what you need and we’ll help you find the right unit.</p>
+              <a href="index.html#contact">
+                Contact Sales
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
             </div>
           </aside>
 
+          <!-- Results -->
           <div class="inventory-results">
             <div class="results-header">
               <p class="results-count">Showing <strong id="results-count">0</strong> results</p>
+
               <div class="results-sort">
-                <label for="sort-select">Sort by:</label>
-                <select id="sort-select">
+                <label for="page-size-select">Per page:</label>
+                <select id="page-size-select" aria-label="Results per page">
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+                  <option value="all">All</option>
+                </select>
+
+                <label for="sort-select" style="margin-left: 10px;">Sort by:</label>
+                <select id="sort-select" aria-label="Sort inventory">
                   <option value="price_asc">Price: Low to High</option>
                   <option value="price_desc">Price: High to Low</option>
                   <option value="mileage_asc">Mileage: Low to High</option>
@@ -147,22 +222,58 @@
                 </select>
               </div>
             </div>
+
             <div class="inventory-grid" id="inventory-grid" role="list"></div>
+
             <div class="no-results" id="no-results" style="display: none;">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
               <h3>No results found</h3>
               <p>Try adjusting your filters or search criteria.</p>
             </div>
+
             <nav class="pagination" id="pagination" aria-label="Inventory pagination"></nav>
+
+            <!-- Compliance + transparency note (lightweight) -->
+            <section class="section" style="padding: 40px 0 0;">
+              <div class="container" style="max-width: 900px;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Compliance & Transparency</h2>
+                <p style="color: var(--color-gray-600);">
+                  We begin with a soft-pull credit pre-qualification. All programs are documented with clear terms including
+                  pricing, responsibilities, and applicable return/option details. Inventory photos and specs are representative;
+                  availability and final terms are confirmed at the time of booking or contract.
+                </p>
+              </div>
+            </section>
+
           </div>
         </div>
       </div>
     </section>
+
+    <!-- CTA footer -->
+    <section class="section section--gray" style="padding: 40px 0;">
+      <div class="container" style="text-align:center; max-width: 900px;">
+        <h2 style="margin-bottom: 10px;">Ready to move?</h2>
+        <p style="color: var(--color-gray-600); margin-bottom: 20px;">
+          Request a quote, browse inventory, or contact our team—serving owner-operators and fleets since 2017.
+        </p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <a class="btn btn-primary" href="index.html#contact">Request Quote</a>
+          <a class="btn btn-secondary" href="sales.html">View Inventory</a>
+          <a class="btn btn-secondary" href="index.html#contact">Contact</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="simple-footer">
     <div class="container">
-      <p>&copy; 2025 Right Truck Deal LLC. All rights reserved.</p>
+      <p>&copy; 2026 Right Truck Deal LLC. All rights reserved.</p>
       <div class="simple-footer-links">
         <a href="index.html#compliance">Privacy Policy</a>
         <a href="index.html#compliance">Terms of Service</a>
@@ -171,5 +282,31 @@
   </footer>
 
   <script src="app.js"></script>
+
+  <!-- Minimal inline script ONLY to toggle the #mobile-menu-sales panel -->
+  <!-- app.js handles .mobile-menu-toggle visual state, but it doesn't open this panel -->
+  <script>
+    (function () {
+      const btn = document.querySelector('.mobile-menu-toggle');
+      const panel = document.getElementById('mobile-menu-sales');
+      if (!btn || !panel) return;
+
+      btn.addEventListener('click', function () {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        panel.classList.toggle('active');
+        panel.setAttribute('aria-hidden', String(expanded));
+      });
+
+      panel.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          btn.setAttribute('aria-expanded', 'false');
+          panel.classList.remove('active');
+          panel.setAttribute('aria-hidden', 'true');
+        });
+      });
+    })();
+  </script>
+
 </body>
 </html>
