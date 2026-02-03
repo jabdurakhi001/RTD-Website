@@ -155,28 +155,64 @@ async function loadInventoryFromSheet() {
 // FALLBACK DATA (used if Google Sheets fails)
 // ============================================
 
-const FALLBACK_INVENTORY = /* keep your existing fallback as-is */ (typeof FALLBACK_INVENTORY !== 'undefined'
-  ? FALLBACK_INVENTORY
-  : null);
-
-// If your existing file already defines FALLBACK_INVENTORY above, ignore this line.
-// Otherwise, you should keep your full fallback object from your current app.js.
+const FALLBACK_INVENTORY = {
+  trucks: [
+    {
+      id: 'T001',
+      type: 'truck',
+      year: 2024,
+      make: 'Freightliner',
+      model: 'Cascadia',
+      mileage: 45000,
+      price: 125000,
+      status: 'available',
+      location: 'St. Charles, MO',
+      image: '',
+      images: [],
+      description: 'Well-maintained Freightliner Cascadia with low mileage.',
+      highlights: ['Detroit DD15 Engine', 'Automated Transmission', 'APU Equipped', 'Sleeper Cab']
+    },
+    {
+      id: 'T002',
+      type: 'truck',
+      year: 2023,
+      make: 'Volvo',
+      model: 'VNL860',
+      mileage: 78000,
+      price: 115000,
+      status: 'available',
+      location: 'St. Charles, MO',
+      image: '',
+      images: [],
+      description: 'Premium Volvo VNL860 with excellent fuel efficiency.',
+      highlights: ['Volvo D13 Engine', 'I-Shift Transmission', 'Full Aero Package', 'Premium Interior']
+    }
+  ],
+  trailers: [
+    {
+      id: 'TR001',
+      type: 'trailer',
+      year: 2022,
+      make: 'Great Dane',
+      model: 'Dry Van',
+      lengthFt: 53,
+      mileage: null,
+      price: 35000,
+      status: 'available',
+      location: 'St. Charles, MO',
+      image: '',
+      images: [],
+      description: 'Great Dane dry van trailer in excellent condition.',
+      highlights: ['Swing Doors', 'LED Lights', 'Air Ride Suspension']
+    }
+  ]
+};
 
 /**
  * Use fallback if Google Sheets fails
  */
 function useFallbackInventory() {
-  // If you kept your original FALLBACK_INVENTORY block, this will work.
-  if (typeof window !== 'undefined' && window.FALLBACK_INVENTORY) {
-    INVENTORY = window.FALLBACK_INVENTORY;
-    return;
-  }
-  if (typeof FALLBACK_INVENTORY !== 'undefined' && FALLBACK_INVENTORY) {
-    INVENTORY = FALLBACK_INVENTORY;
-    return;
-  }
-  // last resort
-  INVENTORY = { trucks: [], trailers: [] };
+  INVENTORY = FALLBACK_INVENTORY;
 }
 
 // ============================================
@@ -460,13 +496,11 @@ class InventoryManager {
       await loadInventoryFromSheet();
       if (INVENTORY.trucks.length === 0 && INVENTORY.trailers.length === 0) {
         console.log('No data from Google Sheets, using fallback');
-        // If your fallback block exists above in your file, this will work.
-        // Otherwise remove fallback usage.
-        // useFallbackInventory();
+        useFallbackInventory();
       }
     } catch (error) {
       console.error('Failed to load from Google Sheets:', error);
-      // useFallbackInventory();
+      useFallbackInventory();
     }
 
     // Update homepage year highlight if present (optional hook)
