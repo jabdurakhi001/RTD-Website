@@ -1098,6 +1098,294 @@ class InventoryManager {
 }
 
 // ============================================
+// MODAL MANAGER CLASS
+// ============================================
+
+class ModalManager {
+  constructor() {
+    this.modal = document.getElementById('details-modal');
+    this.currentItem = null;
+    this.currentImageIndex = 0;
+    this.images = [];
+
+    if (this.modal) {
+      this.bindEvents();
+    }
+  }
+
+  bindEvents() {
+    const self = this;
+
+    // Close button
+    const closeBtn = document.getElementById('modal-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        self.close();
+      });
+    }
+
+    // Click outside to close
+    this.modal.addEventListener('click', function(e) {
+      if (e.target === self.modal) {
+        self.close();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (!self.modal.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        self.close();
+      } else if (e.key === 'ArrowLeft') {
+        self.prevImage();
+      } else if (e.key === 'ArrowRight') {
+        self.nextImage();
+      }
+    });
+
+    // Gallery navigation buttons
+    const prevBtn = this.modal.querySelector('.gallery-prev');
+    const nextBtn = this.modal.querySelector('.gallery-next');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        self.prevImage();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        self.nextImage();
+      });
+    }
+
+    // Delegate click events on inventory grid for Details button
+    document.addEventListener('click', function(e) {
+      const detailsBtn = e.target.closest('.btn-details');
+      if (detailsBtn) {
+        const card = detailsBtn.closest('.inventory-card');
+        if (card) {
+          const itemId = card.dataset.id;
+          self.openByItemId(itemId);
+        }
+      }
+
+      // Thumbnail click
+      if (e.target.closest('.gallery-thumbnail')) {
+        const thumb = e.target.closest('.gallery-thumbnail');
+        const index = parseInt(thumb.dataset.index);
+        self.showImage(index);
+      }
+    });
+  }
+
+  openByItemId(itemId) {
+    // Find item in inventory
+    let item = INVENTORY.trucks.find(t => t.id === itemId);
+    if (!item) {
+      item = INVENTORY.trailers.find(t => t.id === itemId);
+    }
+
+    if (item) {
+      this.open(item);
+    }
+  }
+
+  open(item) {
+    this.currentItem = item;
+    this.images = item.images && item.images.length > 0 ? item.images : (item.image ? [item.image] : []);
+    this.currentImageIndex = 0;
+
+    // Populate modal content
+    this.populateModal(item);
+
+    // Show modal
+    this.modal.classList.add('active');
+    document.body.classList.add('modal-open');
+
+    // Update gallery
+    this.renderGallery();
+    this.updateNavButtons();
+  }
+
+  close() {
+    this.modal.classList.remove('active');
+    document.body.classList.remove('modal-open');
+    this.currentItem = null;
+    this.images = [];
+    this.currentImageIndex = 0;
+  }
+
+  populateModal(item) {
+    // Status
+    const statusEl = document.getElementById('modal-status');
+    if (statusEl) {
+      const status = normalizeStatus ? normalizeStatus(item.status) : item.status;
+      statusEl.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+      statusEl.className = 'modal-status status-' + status;
+    }
+
+    // Title
+    const titleEl = document.getElementById('modal-title');
+    if (titleEl) {
+      titleEl.textContent = item.year + ' ' + item.make + ' ' + item.model;
+    }
+
+    // Location
+    const locationEl = document.getElementById('modal-location');
+    if (locationEl) {
+      locationEl.textContent = item.location || '';
+    }
+
+    // Price
+    const priceEl = document.getElementById('modal-price');
+    if (priceEl) {
+      priceEl.textContent = formatPrice(item.price);
+    }
+
+    // Specs
+    const specYear = document.getElementById('spec-year');
+    const specMake = document.getElementById('spec-make');
+    const specModel = document.getElementById('spec-model');
+    if (specYear) specYear.textContent = item.year;
+    if (specMake) specMake.textContent = item.make;
+    if (specModel) specModel.textContent = item.model;
+
+    const mileageContainer = document.getElementById('spec-mileage-container');
+    const mileageEl = document.getElementById('spec-mileage');
+
+    if (item.type === 'trailer') {
+      // For trailers, show length instead of mileage
+      if (mileageContainer) {
+        const label = mileageContainer.querySelector('.spec-label');
+        if (label) label.textContent = 'Length';
+      }
+      if (mileageEl) {
+        mileageEl.textContent = (item.lengthFt || 53) + ' ft';
+      }
+    } else {
+      // For trucks, show mileage
+      if (mileageContainer) {
+        const label = mileageContainer.querySelector('.spec-label');
+        if (label) label.textContent = 'Mileage';
+      }
+      if (mileageEl) {
+        mileageEl.textContent = formatMileage(item.mileage);
+      }
+    }
+
+    // Description
+    const descEl = document.getElementById('modal-description-text');
+    if (descEl) {
+      descEl.textContent = item.description || 'No description available.';
+    }
+
+    // Highlights
+    const highlightsList = document.getElementById('modal-highlights-list');
+    if (highlightsList) {
+      if (item.highlights && item.highlights.length > 0) {
+        highlightsList.innerHTML = item.highlights.map(h => '<li>' + escapeHtml(h) + '</li>').join('');
+        highlightsList.parentElement.style.display = 'block';
+      } else {
+        highlightsList.parentElement.style.display = 'none';
+      }
+    }
+  }
+
+  renderGallery() {
+    const mainImageContainer = document.getElementById('gallery-main-image');
+    const thumbnailsContainer = document.getElementById('gallery-thumbnails');
+    const counterEl = document.getElementById('gallery-counter');
+
+    if (!mainImageContainer) return;
+
+    if (this.images.length === 0) {
+      // No images - show placeholder
+      mainImageContainer.innerHTML = '<div class="image-placeholder"><span class="placeholder-icon">&#128666;</span></div>';
+      if (thumbnailsContainer) thumbnailsContainer.innerHTML = '';
+      if (counterEl) counterEl.textContent = '0 / 0';
+      return;
+    }
+
+    // Show current image
+    this.showImage(this.currentImageIndex);
+
+    // Render thumbnails
+    if (thumbnailsContainer) {
+      if (this.images.length > 1) {
+        thumbnailsContainer.innerHTML = this.images.map((img, index) => {
+          return '<div class="gallery-thumbnail' + (index === this.currentImageIndex ? ' active' : '') + '" data-index="' + index + '">' +
+            '<img src="' + escapeHtml(img) + '" alt="Image ' + (index + 1) + '" loading="lazy">' +
+          '</div>';
+        }).join('');
+        thumbnailsContainer.style.display = 'flex';
+      } else {
+        thumbnailsContainer.style.display = 'none';
+      }
+    }
+
+    // Update counter
+    if (counterEl) {
+      counterEl.textContent = (this.currentImageIndex + 1) + ' / ' + this.images.length;
+    }
+  }
+
+  showImage(index) {
+    if (index < 0 || index >= this.images.length) return;
+
+    this.currentImageIndex = index;
+    const mainImageContainer = document.getElementById('gallery-main-image');
+    const counterEl = document.getElementById('gallery-counter');
+
+    if (mainImageContainer) {
+      const imgUrl = this.images[index];
+      mainImageContainer.innerHTML = '<img src="' + escapeHtml(imgUrl) + '" alt="' + escapeHtml(this.currentItem.year + ' ' + this.currentItem.make + ' ' + this.currentItem.model) + '" onerror="this.parentElement.innerHTML=\'<div class=image-placeholder><span class=placeholder-icon>&#128666;</span></div>\'">';
+    }
+
+    // Update thumbnails active state
+    const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+    thumbnails.forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === index);
+    });
+
+    // Update counter
+    if (counterEl) {
+      counterEl.textContent = (index + 1) + ' / ' + this.images.length;
+    }
+
+    this.updateNavButtons();
+  }
+
+  prevImage() {
+    if (this.currentImageIndex > 0) {
+      this.showImage(this.currentImageIndex - 1);
+    }
+  }
+
+  nextImage() {
+    if (this.currentImageIndex < this.images.length - 1) {
+      this.showImage(this.currentImageIndex + 1);
+    }
+  }
+
+  updateNavButtons() {
+    const prevBtn = this.modal.querySelector('.gallery-prev');
+    const nextBtn = this.modal.querySelector('.gallery-next');
+
+    if (prevBtn) {
+      prevBtn.disabled = this.currentImageIndex === 0 || this.images.length <= 1;
+      prevBtn.style.display = this.images.length <= 1 ? 'none' : 'flex';
+    }
+
+    if (nextBtn) {
+      nextBtn.disabled = this.currentImageIndex === this.images.length - 1 || this.images.length <= 1;
+      nextBtn.style.display = this.images.length <= 1 ? 'none' : 'flex';
+    }
+  }
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -1108,4 +1396,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const inventoryManager = new InventoryManager();
   inventoryManager.init();
+
+  // Initialize modal manager
+  const modalManager = new ModalManager();
 });
