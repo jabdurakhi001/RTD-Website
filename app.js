@@ -1658,150 +1658,35 @@ class ModalManager {
 }
 
 // ============================================
-// MOBILE FILTERS MANAGER
+// MOBILE FILTERS (sidebar-as-modal approach)
 // ============================================
 
-class MobileFiltersManager {
-  constructor(inventoryManager) {
-    this.inventoryManager = inventoryManager;
-    this.overlay = document.getElementById('mobile-filters-overlay');
-    this.panel = document.getElementById('mobile-filters-panel');
-    this.body = document.getElementById('mobile-filters-body');
-    this.toggleBtn = document.getElementById('mobile-filter-toggle');
-    this.closeBtn = document.getElementById('mobile-filters-close');
-    this.applyBtn = document.getElementById('mobile-apply-filters');
-    this.resetBtn = document.getElementById('mobile-reset-filters');
-    this.badgeEl = document.getElementById('active-filter-count');
+function initMobileFilters(inventoryManager) {
+  var openBtn = document.getElementById('open-mobile-filters');
+  var closeBtn = document.getElementById('close-mobile-filters');
+  var showResultsBtn = document.getElementById('mobile-show-results');
+  var sidebar = document.getElementById('filters-sidebar');
+  var backdrop = document.getElementById('mobile-filter-backdrop');
+  var badge = document.getElementById('active-filter-count');
 
-    if (this.overlay && this.toggleBtn) {
-      this.bindEvents();
-    }
-  }
+  if (!openBtn || !sidebar) return;
 
-  bindEvents() {
-    const self = this;
-
-    this.toggleBtn.addEventListener('click', function () {
-      self.open();
-    });
-
-    this.closeBtn.addEventListener('click', function () {
-      self.close();
-    });
-
-    this.overlay.addEventListener('click', function (e) {
-      if (e.target === self.overlay) {
-        self.close();
-      }
-    });
-
-    this.applyBtn.addEventListener('click', function () {
-      self.syncToSidebar();
-      self.inventoryManager.applyFilters();
-      self.close();
-      self.updateBadge();
-    });
-
-    this.resetBtn.addEventListener('click', function () {
-      self.inventoryManager.resetFilters();
-      self.populateFromSidebar();
-      self.close();
-      self.updateBadge();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && self.overlay.classList.contains('active')) {
-        self.close();
-      }
-    });
-  }
-
-  open() {
-    this.populateFromSidebar();
-    this.overlay.classList.add('active');
-    this.overlay.setAttribute('aria-hidden', 'false');
-    this.toggleBtn.setAttribute('aria-expanded', 'true');
+  function openFilters() {
+    sidebar.classList.add('mobile-open');
+    if (backdrop) backdrop.classList.add('active');
     document.body.classList.add('modal-open');
   }
 
-  close() {
-    this.overlay.classList.remove('active');
-    this.overlay.setAttribute('aria-hidden', 'true');
-    this.toggleBtn.setAttribute('aria-expanded', 'false');
+  function closeFilters() {
+    sidebar.classList.remove('mobile-open');
+    if (backdrop) backdrop.classList.remove('active');
     document.body.classList.remove('modal-open');
   }
 
-  populateFromSidebar() {
-    if (!this.body) return;
-    const sidebar = document.querySelector('.filters-sidebar');
-    if (!sidebar) return;
-
-    this.body.innerHTML = '';
-
-    // Clone filter groups from sidebar into mobile panel
-    const filterGroups = sidebar.querySelectorAll('.filter-group');
-    filterGroups.forEach(function (group) {
-      const clone = group.cloneNode(true);
-      // Give mobile inputs unique IDs to avoid conflicts
-      clone.querySelectorAll('[id]').forEach(function (el) {
-        el.id = 'mobile-' + el.id;
-      });
-      // Sync checkbox states from sidebar
-      const origCheckboxes = group.querySelectorAll('input[type="checkbox"]');
-      const cloneCheckboxes = clone.querySelectorAll('input[type="checkbox"]');
-      origCheckboxes.forEach(function (cb, i) {
-        if (cloneCheckboxes[i]) {
-          cloneCheckboxes[i].checked = cb.checked;
-        }
-      });
-      // Sync text/number input values
-      const origInputs = group.querySelectorAll('input[type="text"], input[type="number"]');
-      const cloneInputs = clone.querySelectorAll('input[type="text"], input[type="number"]');
-      origInputs.forEach(function (inp, i) {
-        if (cloneInputs[i]) {
-          cloneInputs[i].value = inp.value;
-        }
-      });
-      // Ensure collapsed groups are expanded on mobile for visibility
-      clone.classList.remove('collapsed');
-      this.body.appendChild(clone);
-    }.bind(this));
-  }
-
-  syncToSidebar() {
-    const sidebar = document.querySelector('.filters-sidebar');
-    if (!sidebar || !this.body) return;
-
-    const sidebarGroups = sidebar.querySelectorAll('.filter-group');
-    const mobileGroups = this.body.querySelectorAll('.filter-group');
-
-    mobileGroups.forEach(function (mobileGroup, idx) {
-      if (!sidebarGroups[idx]) return;
-
-      // Sync checkboxes
-      const mobileChecks = mobileGroup.querySelectorAll('input[type="checkbox"]');
-      const sidebarChecks = sidebarGroups[idx].querySelectorAll('input[type="checkbox"]');
-      mobileChecks.forEach(function (cb, i) {
-        if (sidebarChecks[i]) {
-          sidebarChecks[i].checked = cb.checked;
-        }
-      });
-
-      // Sync text/number inputs
-      const mobileInputs = mobileGroup.querySelectorAll('input[type="text"], input[type="number"]');
-      const sidebarInputs = sidebarGroups[idx].querySelectorAll('input[type="text"], input[type="number"]');
-      mobileInputs.forEach(function (inp, i) {
-        if (sidebarInputs[i]) {
-          sidebarInputs[i].value = inp.value;
-        }
-      });
-    });
-  }
-
-  updateBadge() {
-    if (!this.badgeEl) return;
-    let count = 0;
-    const f = this.inventoryManager.filters;
+  function updateBadge() {
+    if (!badge) return;
+    var count = 0;
+    var f = inventoryManager.filters;
     if (f.assetIdQuery) count++;
     if (f.years.length) count += f.years.length;
     if (f.makes.length) count += f.makes.length;
@@ -1813,12 +1698,52 @@ class MobileFiltersManager {
     if (f.priceMax !== null) count++;
 
     if (count > 0) {
-      this.badgeEl.textContent = String(count);
-      this.badgeEl.style.display = 'inline-flex';
+      badge.textContent = String(count);
+      badge.classList.add('visible');
     } else {
-      this.badgeEl.style.display = 'none';
+      badge.textContent = '';
+      badge.classList.remove('visible');
     }
   }
+
+  openBtn.addEventListener('click', openFilters);
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeFilters);
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeFilters);
+  }
+
+  if (showResultsBtn) {
+    showResultsBtn.addEventListener('click', function () {
+      inventoryManager.applyFilters();
+      closeFilters();
+      updateBadge();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sidebar.classList.contains('mobile-open')) {
+      closeFilters();
+    }
+  });
+
+  // Update badge whenever filters are applied via desktop sidebar too
+  var origApply = inventoryManager.applyFilters.bind(inventoryManager);
+  inventoryManager.applyFilters = function () {
+    origApply();
+    updateBadge();
+  };
+
+  var origReset = inventoryManager.resetFilters.bind(inventoryManager);
+  inventoryManager.resetFilters = function () {
+    origReset();
+    updateBadge();
+  };
+
+  updateBadge();
 }
 
 // ============================================
@@ -1830,13 +1755,12 @@ document.addEventListener('DOMContentLoaded', function () {
   initFAQ();
   initContactForm();
 
-  const inventoryManager = new InventoryManager();
+  var inventoryManager = new InventoryManager();
   inventoryManager.init().then(function () {
-    // Initialize mobile filters after inventory is loaded
-    const mobileFilters = new MobileFiltersManager(inventoryManager);
-    mobileFilters.updateBadge();
+    // Initialize mobile filter toggle (uses same sidebar DOM)
+    initMobileFilters(inventoryManager);
   });
 
   // Initialize modal manager
-  const modalManager = new ModalManager();
+  var modalManager = new ModalManager();
 });
