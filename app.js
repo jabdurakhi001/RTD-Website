@@ -1064,15 +1064,8 @@ class InventoryManager {
       });
     });
 
-    // Details button - basic for now
-    const detailButtons = document.querySelectorAll('.btn-details');
-    detailButtons.forEach(btn => {
-      btn.addEventListener('click', function () {
-        const card = btn.closest('.inventory-card');
-        const id = card ? card.getAttribute('data-id') : '';
-        alert(`Asset Details\n\nAsset ID: ${id}\n\n(Replace this alert with a modal later.)`);
-      });
-    });
+    // Details button - handled by ModalManager via event delegation
+    // No additional binding needed here
   }
 
   renderPagination(totalPages) {
@@ -1191,6 +1184,14 @@ class ModalManager {
     if (nextBtn) {
       nextBtn.addEventListener('click', function() {
         self.nextImage();
+      });
+    }
+
+    // Print details button
+    const printBtn = document.getElementById('btn-print-details');
+    if (printBtn) {
+      printBtn.addEventListener('click', function() {
+        self.printDetails();
       });
     }
 
@@ -1415,6 +1416,271 @@ class ModalManager {
     if (nextBtn) {
       nextBtn.disabled = this.currentImageIndex === this.images.length - 1 || this.images.length <= 1;
       nextBtn.style.display = this.images.length <= 1 ? 'none' : 'flex';
+    }
+  }
+
+  printDetails() {
+    if (!this.currentItem) return;
+    const item = this.currentItem;
+    const images = this.images;
+    const status = normalizeStatus(item.status);
+    const statusText = status.charAt(0).toUpperCase() + status.slice(1);
+
+    // Build images HTML for print
+    let imagesHtml = '';
+    if (images.length > 0) {
+      imagesHtml = '<div class="print-images">';
+      imagesHtml += '<div class="print-main-image">';
+      imagesHtml += '<img src="' + escapeHtml(images[0]) + '" alt="' + escapeHtml(item.year + ' ' + item.make + ' ' + item.model) + '">';
+      imagesHtml += '</div>';
+      if (images.length > 1) {
+        imagesHtml += '<div class="print-gallery">';
+        for (let i = 1; i < images.length; i++) {
+          imagesHtml += '<img src="' + escapeHtml(images[i]) + '" alt="Photo ' + (i + 1) + '">';
+        }
+        imagesHtml += '</div>';
+      }
+      imagesHtml += '</div>';
+    }
+
+    // Build specs
+    let specsHtml = '';
+    specsHtml += '<tr><td>Year</td><td>' + escapeHtml(String(item.year)) + '</td></tr>';
+    specsHtml += '<tr><td>Make</td><td>' + escapeHtml(item.make) + '</td></tr>';
+    specsHtml += '<tr><td>Model</td><td>' + escapeHtml(item.model) + '</td></tr>';
+    if (item.type === 'trailer') {
+      specsHtml += '<tr><td>Length</td><td>' + (item.lengthFt || 53) + ' ft</td></tr>';
+    } else {
+      specsHtml += '<tr><td>Mileage</td><td>' + escapeHtml(formatMileage(item.mileage)) + '</td></tr>';
+    }
+    specsHtml += '<tr><td>Status</td><td>' + escapeHtml(statusText) + '</td></tr>';
+    specsHtml += '<tr><td>Location</td><td>' + escapeHtml(item.location || 'N/A') + '</td></tr>';
+    if (item.id) {
+      specsHtml += '<tr><td>Asset ID</td><td>' + escapeHtml(item.id) + '</td></tr>';
+    }
+
+    // Build highlights
+    let highlightsHtml = '';
+    if (item.highlights && item.highlights.length > 0) {
+      highlightsHtml = '<div class="print-section"><h3>Key Features</h3><ul>';
+      item.highlights.forEach(h => {
+        highlightsHtml += '<li>' + escapeHtml(h) + '</li>';
+      });
+      highlightsHtml += '</ul></div>';
+    }
+
+    const printHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${escapeHtml(item.year + ' ' + item.make + ' ' + item.model)} - Right Truck Deal</title>
+<style>
+  @page { margin: 0.5in; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    color: #1f2937;
+    line-height: 1.5;
+    padding: 0;
+  }
+  .print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 3px solid #1e40af;
+    margin-bottom: 24px;
+  }
+  .print-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e40af;
+  }
+  .print-header .company {
+    text-align: right;
+    font-size: 12px;
+    color: #6b7280;
+  }
+  .print-header .company strong {
+    display: block;
+    font-size: 16px;
+    color: #1e40af;
+  }
+  .print-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+  }
+  .print-title-row h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #111827;
+  }
+  .print-price {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1e40af;
+  }
+  .print-status {
+    display: inline-block;
+    padding: 3px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .print-status.status-available { background: #d1fae5; color: #065f46; }
+  .print-status.status-pending { background: #fef3c7; color: #92400e; }
+  .print-status.status-sold { background: #fee2e2; color: #991b1b; }
+  .print-images { margin-bottom: 24px; }
+  .print-main-image { margin-bottom: 12px; }
+  .print-main-image img {
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+  }
+  .print-gallery {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .print-gallery img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+  }
+  .print-section { margin-bottom: 20px; }
+  .print-section h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .specs-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .specs-table td {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .specs-table td:first-child {
+    font-weight: 600;
+    color: #6b7280;
+    width: 140px;
+  }
+  .specs-table td:last-child {
+    color: #111827;
+  }
+  .print-section p {
+    font-size: 14px;
+    color: #374151;
+    line-height: 1.7;
+  }
+  .print-section ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+  }
+  .print-section ul li {
+    padding: 4px 12px;
+    font-size: 12px;
+    background: #f3f4f6;
+    border-radius: 4px;
+    color: #374151;
+  }
+  .print-section ul li::before {
+    content: '\\2713  ';
+    color: #10b981;
+    font-weight: bold;
+  }
+  .print-footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 2px solid #1e40af;
+    font-size: 12px;
+    color: #6b7280;
+    text-align: center;
+  }
+  .print-footer strong { color: #1e40af; }
+</style>
+</head>
+<body>
+  <div class="print-header">
+    <h1>Vehicle Specification Sheet</h1>
+    <div class="company">
+      <strong>Right Truck Deal LLC</strong>
+      righttruckdeal.us
+    </div>
+  </div>
+
+  <div class="print-title-row">
+    <h2>${escapeHtml(item.year + ' ' + item.make + ' ' + item.model)}</h2>
+    <span class="print-price">${escapeHtml(formatPrice(item.price))}</span>
+  </div>
+
+  <span class="print-status status-${escapeHtml(status)}">${escapeHtml(statusText)}</span>
+
+  ${imagesHtml}
+
+  <div class="print-section">
+    <h3>Specifications</h3>
+    <table class="specs-table">${specsHtml}</table>
+  </div>
+
+  ${item.description ? '<div class="print-section"><h3>Description</h3><p>' + escapeHtml(item.description) + '</p></div>' : ''}
+
+  ${highlightsHtml}
+
+  <div class="print-footer">
+    <strong>Right Truck Deal LLC</strong> &mdash; Truck &amp; Trailer Sales, Leasing &amp; Rentals<br>
+    Contact us at righttruckdeal.us for more information
+  </div>
+
+  <script>
+    // Wait for images to load then print
+    var imgs = document.querySelectorAll('img');
+    var loaded = 0;
+    var total = imgs.length;
+    if (total === 0) {
+      window.print();
+      window.close();
+    } else {
+      imgs.forEach(function(img) {
+        img.onload = img.onerror = function() {
+          loaded++;
+          if (loaded >= total) {
+            setTimeout(function() { window.print(); window.close(); }, 300);
+          }
+        };
+        if (img.complete) {
+          loaded++;
+          if (loaded >= total) {
+            setTimeout(function() { window.print(); window.close(); }, 300);
+          }
+        }
+      });
+    }
+  <\/script>
+</body>
+</html>`;
+
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(printHtml);
+      printWindow.document.close();
     }
   }
 }
