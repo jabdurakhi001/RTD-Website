@@ -4650,8 +4650,54 @@ body.modal-open {
   background-repeat: no-repeat;
 }
 
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 64, 175, 0.9) 0%,
+    rgba(17, 24, 39, 0.85) 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
 .hero-content {
+  position: relative;
+  z-index: 1;
   max-width: 640px;
+  padding: var(--space-8) 0;
+  color: var(--color-white);
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    padding: var(--space-12) 0;
+  }
+}
+
+.hero-subtitle {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .hero-subtitle {
+    font-size: var(--text-xl);
+  }
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .btn-group {
+    flex-direction: row;
+  }
 }
 
 .hero-badge {
