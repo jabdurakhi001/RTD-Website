@@ -356,7 +356,7 @@ function initContactForm() {
     const inputErrors = contactForm.querySelectorAll('.input-error');
     inputErrors.forEach(function (el) { el.classList.remove('input-error'); });
 
-    const nameField = contactForm.querySelector('#name');
+    const nameField = contactForm.querySelector('#full-name');
     const emailField = contactForm.querySelector('#email');
     const phoneField = contactForm.querySelector('#phone');
     const messageField = contactForm.querySelector('#message');
