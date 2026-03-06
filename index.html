@@ -543,64 +543,6 @@
   }
   .service-card-link:hover { gap: 10px; }
 
-  /* ── FLEET GALLERY ── */
-  .fleet-gallery {
-    padding: 5rem 0;
-    background: var(--gray-50);
-  }
-  .fleet-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-  .fleet-card {
-    border-radius: 12px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
-  .fleet-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  }
-  .fleet-card-img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    display: block;
-    background: var(--navy-mid);
-  }
-  .fleet-card-body {
-    padding: 1.25rem;
-  }
-  .fleet-card-body h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 1.15rem;
-    text-transform: uppercase;
-    color: var(--navy);
-    margin-bottom: 0.25rem;
-  }
-  .fleet-card-body .fleet-year {
-    font-size: 0.8rem;
-    color: var(--blue);
-    font-weight: 600;
-    margin-bottom: 0.35rem;
-  }
-  .fleet-card-body p {
-    font-size: 0.85rem;
-    color: var(--gray-600);
-    line-height: 1.5;
-  }
-  @media (max-width: 900px) {
-    .fleet-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 600px) {
-    .fleet-grid { grid-template-columns: 1fr; }
-  }
-
   /* ── WHY CHOOSE ── */
   .why {
     background: var(--navy);
@@ -1061,7 +1003,7 @@
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
-    <li><a href="#fleet">Fleet</a></li>
+    <li><a href="#why-choose">Why Us</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
@@ -1073,7 +1015,7 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#services" onclick="closeMenu()">Services</a>
-  <a href="#fleet" onclick="closeMenu()">Fleet</a>
+  <a href="#why-choose" onclick="closeMenu()">Why Us</a>
   <a href="#about" onclick="closeMenu()">About Us</a>
   <a href="#faq" onclick="closeMenu()">FAQ</a>
   <a href="tel:+13144643311" onclick="closeMenu()">(314) 464-3311</a>
@@ -1193,70 +1135,6 @@
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<!-- FLEET GALLERY -->
-<section class="fleet-gallery" id="fleet">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:0.5rem">
-      <div class="section-label">Our Fleet</div>
-      <h2 class="section-title">2025 &amp; 2026 Freightliner Cascadias</h2>
-      <p class="section-sub">Late-model, fuel-efficient semi trucks ready for rent, lease, or purchase.</p>
-    </div>
-    <div class="fleet-grid">
-      <div class="fleet-card">
-        <img class="fleet-card-img" src="images/2026-cascadia.png" alt="2026 Freightliner Cascadia semi truck on highway">
-        <div class="fleet-card-body">
-          <div class="fleet-year">2026 Model</div>
-          <h3>Freightliner Cascadia 126</h3>
-          <p>Sleeper cab, Detroit DD15 engine, 455 HP. Full aero package with fuel-efficient specs.</p>
-        </div>
-      </div>
-      <div class="fleet-card">
-        <img class="fleet-card-img" src="images/2026-cascadia.png" alt="2026 Freightliner Cascadia day cab">
-        <div class="fleet-card-body">
-          <div class="fleet-year">2026 Model</div>
-          <h3>Freightliner Cascadia 116</h3>
-          <p>Day cab configuration, ideal for regional routes. DT12 automated transmission.</p>
-        </div>
-      </div>
-      <div class="fleet-card">
-        <img class="fleet-card-img" src="images/2026-cascadia.png" alt="2025 Freightliner Cascadia sleeper">
-        <div class="fleet-card-body">
-          <div class="fleet-year">2025 Model</div>
-          <h3>Freightliner Cascadia 126</h3>
-          <p>72" raised roof sleeper. Low mileage, DOT inspected, ready for long-haul operations.</p>
-        </div>
-      </div>
-      <div class="fleet-card">
-        <img class="fleet-card-img" src="images/2026-cascadia.png" alt="2025 Freightliner Cascadia fleet truck">
-        <div class="fleet-card-body">
-          <div class="fleet-year">2025 Model</div>
-          <h3>Freightliner Cascadia 116</h3>
-          <p>Day cab with full service history. Perfect for dedicated fleet operations.</p>
-        </div>
-      </div>
-      <div class="fleet-card">
-        <img class="fleet-card-img" src="images/2026-cascadia.png" alt="2025 Freightliner Cascadia on the road">
-        <div class="fleet-card-body">
-          <div class="fleet-year">2025 Model</div>
-          <h3>Freightliner Cascadia 126</h3>
-          <p>Sleeper with premium interior package. Detroit Assurance suite of safety systems.</p>
-        </div>
-      </div>
-      <div class="fleet-card">
-        <img class="fleet-card-img" src="images/2026-cascadia.png" alt="2026 Freightliner Cascadia new model">
-        <div class="fleet-card-body">
-          <div class="fleet-year">2026 Model</div>
-          <h3>Freightliner Cascadia 126</h3>
-          <p>Brand new 5th gen Cascadia. Enhanced aerodynamics, MirrorCam system, 500 HP option.</p>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:2rem">
-      <a href="sales.html" class="btn-primary">View Full Inventory &rarr;</a>
     </div>
   </div>
 </section>
@@ -1509,7 +1387,7 @@
   <p>&copy; 2026 Right Truck Deal LLC. All rights reserved. St. Charles, MO.</p>
   <ul class="footer-links">
     <li><a href="#services">Services</a></li>
-    <li><a href="#fleet">Fleet</a></li>
+    <li><a href="#why-choose">Why Us</a></li>
     <li><a href="sales.html">Inventory</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#faq">FAQ</a></li>
