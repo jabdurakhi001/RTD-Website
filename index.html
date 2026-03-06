@@ -134,8 +134,8 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 60% 50% at 70% 60%, rgba(26,79,196,0.25) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(245,158,11,0.08) 0%, transparent 60%);
+      linear-gradient(to right, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.7) 50%, rgba(10,22,40,0.4) 100%),
+      url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format') center/cover no-repeat;
   }
 
   /* Diagonal accent line */
@@ -639,7 +639,7 @@
   }
 
   .about-visual {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    background: linear-gradient(to top, rgba(10,22,40,0.7), rgba(10,22,40,0.3)), url('https://images.unsplash.com/photo-1570087935869-e4058cba3e5c?w=800&q=80&auto=format') center/cover no-repeat;
     border-radius: 16px;
     padding: 3rem 2rem;
     position: relative;
@@ -1089,8 +1089,7 @@
 
       <div class="service-card">
         <div class="service-card-badge">Most Popular</div>
-        <div class="service-card-img" style="background: linear-gradient(135deg,#0a1628,#1a4fc4);">
-          <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
+        <div class="service-card-img" style="background: linear-gradient(to top, rgba(10,22,40,0.5), transparent), url('https://images.unsplash.com/photo-1586191582056-d37c8d259997?w=600&q=80&auto=format') center/cover no-repeat;">
         </div>
         <div class="service-card-body">
           <h3 class="service-card-title">Commercial Rentals</h3>
@@ -1105,8 +1104,7 @@
       </div>
 
       <div class="service-card">
-        <div class="service-card-img" style="background: linear-gradient(135deg,#0a1628,#1e3a8a);">
-          <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <div class="service-card-img" style="background: linear-gradient(to top, rgba(10,22,40,0.5), transparent), url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80&auto=format') center/cover no-repeat;">
         </div>
         <div class="service-card-body">
           <h3 class="service-card-title">Leasing Programs</h3>
@@ -1121,8 +1119,7 @@
       </div>
 
       <div class="service-card">
-        <div class="service-card-img" style="background: linear-gradient(135deg,#0a1628,#0c3460);">
-          <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <div class="service-card-img" style="background: linear-gradient(to top, rgba(10,22,40,0.5), transparent), url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=600&q=80&auto=format') center/cover no-repeat;">
         </div>
         <div class="service-card-body">
           <h3 class="service-card-title">Fleet Sales</h3>
@@ -1206,9 +1203,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-visual">
-        <div class="about-visual-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
-        </div>
+        <div class="about-visual-icon"></div>
         <div class="about-address">
           <h4 style="display:flex;align-items:center;gap:6px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Headquarters</h4>
           <p>3088 Elm Point Industrial Dr<br>St. Charles, MO 63301<br><br>
