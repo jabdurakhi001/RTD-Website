@@ -1467,6 +1467,27 @@ p:last-child {
   border-color: var(--color-error);
 }
 
+/* JS-generated form validation styles */
+.input-error {
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.error-message {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  margin-top: var(--space-2);
+}
+
+.success-message {
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-medium);
+}
+
 /* Contact Info */
 .contact-info {
   display: flex;
@@ -2049,6 +2070,12 @@ p:last-child {
 }
 
 @media (min-width: 640px) {
+  .inventory-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
   .inventory-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2895,7 +2922,7 @@ p:last-child {
   font-size: var(--text-sm);
   border: 1px solid var(--color-gray-300);
   border-radius: var(--radius-md);
-  min-width: 0;
+  min-width: 60px;
 }
 
 .filter-range input:focus {
@@ -3648,7 +3675,7 @@ p:last-child {
   position: relative;
   width: 100%;
   max-width: 1100px;
-  max-height: 95vh;
+  max-height: 90vh;
   background-color: var(--color-white);
   border-radius: var(--radius-2xl);
   overflow: hidden;
@@ -3691,8 +3718,9 @@ p:last-child {
 .modal-content {
   display: grid;
   grid-template-columns: 1fr;
-  max-height: 95vh;
+  max-height: 90vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (min-width: 768px) {
@@ -4176,11 +4204,12 @@ body.modal-open {
     left: 0;
     right: 0;
     z-index: var(--z-modal);
-    max-height: 85vh;
+    max-height: 80vh;
     background-color: var(--color-white);
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
     padding: var(--space-5) var(--space-6);
+    padding-bottom: env(safe-area-inset-bottom, var(--space-5));
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     animation: slideUp 0.3s ease forwards;
