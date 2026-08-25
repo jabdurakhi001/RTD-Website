@@ -1311,9 +1311,11 @@ class ModalManager {
       // No images - show placeholder
       mainImageContainer.innerHTML = '<div class="image-placeholder"><span class="placeholder-icon">&#128666;</span></div>';
       if (thumbnailsContainer) thumbnailsContainer.innerHTML = '';
-      if (counterEl) counterEl.textContent = '0 / 0';
+      if (counterEl) counterEl.style.display = 'none';
       return;
     }
+
+    if (counterEl) counterEl.style.display = '';
 
     // Show current image
     this.showImage(this.currentImageIndex);
@@ -1747,6 +1749,169 @@ function initMobileFilters(inventoryManager) {
 }
 
 // ============================================
+// UI POLISH: navbar state, scroll reveal, count-up
+// ============================================
+
+function initNavbarScrollState() {
+  var navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  function update() {
+    navbar.classList.toggle('scrolled', window.scrollY > 40 || !document.querySelector('.hero'));
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
+function initScrollReveal() {
+  var targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .process-step');
+  if (!targets.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('in-view'); });
+    return;
+  }
+
+  var observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  targets.forEach(function (el) { observer.observe(el); });
+}
+
+function initCountUp() {
+  var counters = document.querySelectorAll('.count-up');
+  if (!counters.length) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function animate(el) {
+    var target = parseInt(el.dataset.countTo, 10) || 0;
+    if (reduceMotion || target === 0) {
+      el.textContent = String(target);
+      return;
+    }
+
+    var duration = 1400;
+    var start = null;
+
+    function tick(ts) {
+      if (start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(target * eased));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    counters.forEach(function (el) { el.textContent = el.dataset.countTo; });
+    return;
+  }
+
+  var observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  counters.forEach(function (el) { observer.observe(el); });
+}
+
+function initYearsBadge() {
+  // "Years on the road" badge, computed from founding year
+  var el = document.getElementById('years-badge');
+  if (!el) return;
+  var years = new Date().getFullYear() - 2017;
+  if (years > 0) el.textContent = years + '+';
+}
+
+// ============================================
+// HOMEPAGE: featured inventory (live from sheet)
+// ============================================
+
+async function initFeaturedInventory() {
+  var section = document.getElementById('featured');
+  var grid = document.getElementById('featured-grid');
+  if (!section || !grid) return;
+
+  try {
+    var inventory = await loadInventoryFromSheet();
+    var all = [].concat(inventory.trucks || [], inventory.trailers || []);
+
+    var featured = all
+      .filter(function (item) { return normalizeStatus(item.status) === 'available'; })
+      .slice(0, 3);
+
+    if (!featured.length) return; // keep section hidden
+
+    grid.innerHTML = featured.map(renderFeaturedCard).join('');
+    section.hidden = false;
+
+    // Re-run reveal observer for the freshly-unhidden section
+    initScrollRevealFor(section);
+  } catch (error) {
+    console.error('Featured inventory unavailable:', error);
+  }
+}
+
+function initScrollRevealFor(root) {
+  var targets = root.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  targets.forEach(function (el) { el.classList.add('in-view'); });
+}
+
+function renderFeaturedCard(item) {
+  var status = normalizeStatus(item.status);
+  var title = item.year + ' ' + item.make + ' ' + item.model;
+  var imgs = Array.isArray(item.images) && item.images.length ? item.images : (item.image ? [item.image] : []);
+
+  var mediaHtml = imgs[0]
+    ? '<img src="' + escapeHtml(imgs[0]) + '" alt="' + escapeHtml(title) + '" loading="lazy" ' +
+      'onerror="this.parentElement.innerHTML=\'<div class=&quot;image-placeholder&quot;><span class=&quot;placeholder-icon&quot;>&#128666;</span></div>\'">'
+    : '<div class="image-placeholder"><span class="placeholder-icon">&#128666;</span></div>';
+
+  var metaHtml =
+    item.type === 'trailer'
+      ? '<span>' + (item.lengthFt || 53) + ' ft</span><span>' + escapeHtml(item.location || 'On the lot') + '</span>'
+      : '<span>' + escapeHtml(formatMileage(item.mileage)) + '</span><span>' + escapeHtml(item.location || 'On the lot') + '</span>';
+
+  return (
+    '<article class="featured-card reveal">' +
+    '<div class="featured-media">' +
+    mediaHtml +
+    '<span class="status-badge status-' + escapeHtml(status) + '">' + escapeHtml(status.charAt(0).toUpperCase() + status.slice(1)) + '</span>' +
+    '</div>' +
+    '<div class="featured-body">' +
+    '<p class="featured-id">Asset ' + escapeHtml(item.id || '—') + '</p>' +
+    '<h3>' + escapeHtml(title) + '</h3>' +
+    '<div class="featured-meta">' + metaHtml + '</div>' +
+    '<div class="featured-foot">' +
+    '<span class="featured-price">' + escapeHtml(formatPrice(item.price)) + '</span>' +
+    '<a href="sales.html">View details</a>' +
+    '</div>' +
+    '</div>' +
+    '</article>'
+  );
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -1754,6 +1919,14 @@ document.addEventListener('DOMContentLoaded', function () {
   initNavigation();
   initFAQ();
   initContactForm();
+  initNavbarScrollState();
+  initScrollReveal();
+  initCountUp();
+  initYearsBadge();
+  setFooterYear();
+
+  // Homepage: featured units pulled from the same inventory sheet
+  initFeaturedInventory();
 
   var inventoryManager = new InventoryManager();
   inventoryManager.init().then(function () {

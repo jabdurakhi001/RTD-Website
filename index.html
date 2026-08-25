@@ -1,9 +1,591 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Updated Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Right Truck Deal LLC — semi truck and trailer sales, leasing, lease-to-purchase, and rentals in St. Charles, Missouri. Transparent terms, soft-pull pre-qualification, and flexible programs for owner-operators and fleets."
+  />
+  <title>Right Truck Deal LLC | Truck &amp; Trailer Sales, Leasing &amp; Rentals</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a101f'/%3E%3Cpath d='M50 26h-7.5V16H12a4 4 0 0 0-4 4v22h4a7 7 0 0 0 14 0h12a7 7 0 0 0 14 0h4V34l-6-8zM19 46.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm29.5-18 4.4 5.5h-8.4v-5.5h4zM45 46.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z' fill='%23e8a33c'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-    <h1>Welcome to the Updated Page!</h1>
-    <p>This content has been updated as of 2026-03-06 21:18:21 UTC.</p>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Right Truck Deal - Home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          Right Truck Deal
+          <small>Sales &middot; Leasing &middot; Rentals</small>
+        </span>
+      </a>
+
+      <ul class="navbar-nav nav-menu" role="menubar">
+        <li role="none"><a href="index.html" role="menuitem" class="active">Home</a></li>
+        <li role="none"><a href="sales.html" role="menuitem">Inventory</a></li>
+        <li role="none"><a href="#programs" role="menuitem">Programs</a></li>
+        <li role="none"><a href="#process" role="menuitem">How It Works</a></li>
+        <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
+      </ul>
+
+      <a href="#contact" class="btn btn-primary navbar-cta">Request Quote</a>
+
+      <button
+        class="navbar-toggle mobile-menu-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <ul class="mobile-menu-nav" role="menu">
+      <li role="none"><a href="index.html" role="menuitem" class="active">Home</a></li>
+      <li role="none"><a href="sales.html" role="menuitem">Inventory</a></li>
+      <li role="none"><a href="#programs" role="menuitem">Programs</a></li>
+      <li role="none"><a href="#process" role="menuitem">How It Works</a></li>
+      <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-primary btn-lg" style="width: 100%;">Request Quote</a>
+  </div>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero-stage">
+          <span class="hero-eyebrow"><span class="dot"></span>St. Charles, Missouri &middot; Serving Since 2017</span>
+        </div>
+        <h1 class="hero-title hero-stage">
+          The Right Truck.<br />
+          <span class="accent">The Right Deal.</span>
+        </h1>
+        <p class="hero-sub hero-stage">
+          Semi trucks and trailers for owner-operators and fleets &mdash; buy, rent, lease,
+          or lease-to-purchase with transparent pricing, documented terms, and a
+          soft-pull pre-qualification that won&rsquo;t touch your credit score.
+        </p>
+        <div class="hero-actions hero-stage">
+          <a href="sales.html" class="btn btn-primary btn-lg">
+            Browse Inventory
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost-light btn-secondary btn-lg">Get Pre-Approved</a>
+        </div>
+        <div class="hero-chips hero-stage">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Rental
+          </span>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Leasing
+          </span>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Lease-to-Purchase
+          </span>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Sales
+          </span>
+        </div>
+      </div>
+
+      <div class="hero-scroll" aria-hidden="true">Scroll</div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Freightliner</span><span>Volvo</span><span>Kenworth</span><span>Peterbilt</span><span>International</span><span>Great Dane</span><span>Utility</span><span>Wabash</span>
+        <span>Freightliner</span><span>Volvo</span><span>Kenworth</span><span>Peterbilt</span><span>International</span><span>Great Dane</span><span>Utility</span><span>Wabash</span>
+      </div>
+    </div>
+
+    <!-- ============ STATS ============ -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat reveal">
+            <div class="stat-value"><span class="count-up" data-count-to="2017">2017</span></div>
+            <div class="stat-label">Serving drivers since</div>
+          </div>
+          <div class="stat reveal" data-delay="1">
+            <div class="stat-value"><span class="count-up" data-count-to="4">4</span></div>
+            <div class="stat-label">Flexible programs</div>
+          </div>
+          <div class="stat reveal" data-delay="2">
+            <div class="stat-value"><span class="count-up" data-count-to="24">24</span><sup>h</sup></div>
+            <div class="stat-label">Quote response time</div>
+          </div>
+          <div class="stat reveal" data-delay="3">
+            <div class="stat-value"><span class="count-up" data-count-to="0">0</span></div>
+            <div class="stat-label">Hard credit pulls to pre-qualify</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROGRAMS ============ -->
+    <section class="section" id="programs">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">What we offer</span>
+          <h2 class="section-title">Four ways to get on the road</h2>
+          <p class="section-sub">
+            Every operation is different. Whether you need a truck for a season or a
+            path to ownership, there&rsquo;s a program built for how you run.
+          </p>
+        </div>
+
+        <div class="programs-grid">
+          <article class="program-card reveal">
+            <span class="program-num">/ 01</span>
+            <div class="program-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Rental</h3>
+            <p>Short-term capacity without long-term commitment. Cover a busy season, a new contract, or a truck in the shop.</p>
+            <ul>
+              <li>Flexible weekly and monthly terms</li>
+              <li>Road-ready, maintained equipment</li>
+              <li>Fast turnaround on availability</li>
+            </ul>
+            <a href="#contact" class="program-link">
+              Ask about rentals
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="program-card reveal" data-delay="1">
+            <span class="program-num">/ 02</span>
+            <div class="program-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3>Leasing</h3>
+            <p>Predictable monthly costs and newer equipment without the upfront capital of a purchase.</p>
+            <ul>
+              <li>Clear, documented lease terms</li>
+              <li>Lower entry cost than buying</li>
+              <li>Options structured to your cash flow</li>
+            </ul>
+            <a href="#contact" class="program-link">
+              Explore leasing
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="program-card reveal" data-delay="1">
+            <span class="program-num">/ 03</span>
+            <div class="program-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <h3>Lease-to-Purchase</h3>
+            <p>Build toward ownership while you work. Payments apply toward a documented purchase option &mdash; no guesswork at the end.</p>
+            <ul>
+              <li>Path to owning your own truck</li>
+              <li>Purchase option spelled out in writing</li>
+              <li>Soft-pull pre-qualification to start</li>
+            </ul>
+            <a href="#contact" class="program-link">
+              Start the path
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="program-card reveal" data-delay="2">
+            <span class="program-num">/ 04</span>
+            <div class="program-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2a3 3 0 0 0 6 0h6a3 3 0 0 0 6 0h2v-5l-3-4z"/><circle cx="6" cy="17" r="1"/><circle cx="18" cy="17" r="1"/></svg>
+            </div>
+            <h3>Sales</h3>
+            <p>Inspected trucks and trailers at transparent prices. Financing assistance available for qualified buyers through third-party resources.</p>
+            <ul>
+              <li>Detailed specs and photos on every unit</li>
+              <li>No hidden fees at signing</li>
+              <li>Help connecting with financing</li>
+            </ul>
+            <a href="sales.html" class="program-link">
+              View inventory
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED INVENTORY (live from sheet) ============ -->
+    <section class="section section--gray" id="featured" hidden>
+      <div class="container">
+        <div class="featured-head reveal">
+          <div class="section-head">
+            <span class="eyebrow">On the lot now</span>
+            <h2 class="section-title">Featured units</h2>
+          </div>
+          <a href="sales.html" class="btn btn-secondary">
+            All inventory
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="featured-grid" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ SHOWCASE / WHY US ============ -->
+    <section class="section" id="why">
+      <div class="container">
+        <div class="showcase">
+          <div class="showcase-media reveal-left">
+            <div class="frame">
+              <img src="images/truck-trailer-sunset.jpg" alt="Semi truck with 53-foot dry van trailer at a distribution center at sunset" loading="lazy" />
+            </div>
+            <div class="badge-float">
+              <strong id="years-badge">9+</strong>
+              <small>Years on the road</small>
+            </div>
+          </div>
+
+          <div class="reveal-right">
+            <span class="eyebrow">Why Right Truck Deal</span>
+            <h2 class="section-title">Straight terms. No surprises.</h2>
+            <ul class="checklist">
+              <li>
+                <span class="check-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+                </span>
+                <div>
+                  <h4>Everything in writing</h4>
+                  <p>Pricing, responsibilities, and return or purchase options are documented in clear terms before you sign anything.</p>
+                </div>
+              </li>
+              <li>
+                <span class="check-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </span>
+                <div>
+                  <h4>Soft-pull pre-qualification</h4>
+                  <p>We start with a soft credit check &mdash; find out where you stand without any impact to your score.</p>
+                </div>
+              </li>
+              <li>
+                <span class="check-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                <div>
+                  <h4>Built for owner-operators</h4>
+                  <p>Programs shaped around how independent drivers and small fleets actually earn &mdash; not one-size-fits-all contracts.</p>
+                </div>
+              </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary">
+              Talk to our team
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="section section--dark" id="process">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">How it works</span>
+          <h2 class="section-title">From first call to first load</h2>
+        </div>
+
+        <div class="process-grid">
+          <div class="process-step reveal">
+            <span class="process-num">01</span>
+            <h3>Tell us what you need</h3>
+            <p>Truck, trailer, or both &mdash; share your routes, budget, and timeline. We&rsquo;ll point you to the right units and the right program.</p>
+          </div>
+          <div class="process-step reveal" data-delay="1">
+            <span class="process-num">02</span>
+            <h3>Pre-qualify with a soft pull</h3>
+            <p>A soft-pull credit check gives you real numbers up front, with zero impact on your credit score.</p>
+          </div>
+          <div class="process-step reveal" data-delay="2">
+            <span class="process-num">03</span>
+            <h3>Review clear terms</h3>
+            <p>Every agreement documents pricing, responsibilities, and return or purchase options &mdash; read it, question it, then sign it.</p>
+          </div>
+          <div class="process-step reveal" data-delay="3">
+            <span class="process-num">04</span>
+            <h3>Pick up and roll</h3>
+            <p>Complete the paperwork, take the keys in St. Charles, and get back to what pays: driving.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <span class="eyebrow">Questions</span>
+          <h2 class="section-title">Frequently asked</h2>
+        </div>
+
+        <div class="faq-list reveal">
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Will pre-qualifying hurt my credit score?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>No. We begin with a soft-pull credit pre-qualification, which does not affect your credit score. A hard inquiry only happens later if you move forward with financing and authorize it.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              What&rsquo;s the difference between leasing and lease-to-purchase?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>A standard lease gives you use of the truck for a set term with the option to return it at the end. Lease-to-purchase adds a documented purchase option, so your payments build toward owning the truck outright. Both come with clear written terms covering pricing, responsibilities, and end-of-term options.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Can you help me get financing to buy a truck?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. We can connect qualified customers with third-party financing resources and walk you through what lenders typically look for. Start with the pre-approval form and we&rsquo;ll take it from there.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Are the photos and specs on the inventory page exact?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>Inventory photos and specs are representative. Availability and final terms are confirmed at the time of booking or contract &mdash; we&rsquo;ll always verify the exact unit and its condition with you before anything is signed.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Where are you located?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>We&rsquo;re based in St. Charles, Missouri, just outside St. Louis &mdash; an easy reach from I-70 for drivers across the Midwest. Reach out through the contact form to arrange a visit or a walkaround of any unit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA BAND ============ -->
+    <section class="cta-band">
+      <div class="container">
+        <div class="reveal">
+          <h2>Ready to <span class="accent">move?</span></h2>
+          <p>Tell us what you&rsquo;re hauling and we&rsquo;ll match you with the right truck, trailer, and program &mdash; usually within one business day.</p>
+        </div>
+        <div class="cta-actions reveal" data-delay="1">
+          <a href="sales.html" class="btn btn-primary btn-lg">Browse Inventory</a>
+          <a href="#contact" class="btn btn-ghost-light btn-lg">Request a Quote</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-layout">
+          <div class="contact-info reveal-left">
+            <div class="section-head">
+              <span class="eyebrow">Get in touch</span>
+              <h2 class="section-title">Request a quote</h2>
+              <p class="section-sub">
+                Send the form and our team will follow up within 24 hours with
+                availability, pricing, and next steps.
+              </p>
+            </div>
+
+            <div class="contact-cards">
+              <div class="contact-card">
+                <span class="cc-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
+                <div>
+                  <h4>Location</h4>
+                  <p>St. Charles, Missouri &mdash; serving owner-operators and fleets across the Midwest.</p>
+                </div>
+              </div>
+              <div class="contact-card">
+                <span class="cc-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </span>
+                <div>
+                  <h4>Response time</h4>
+                  <p>Quote requests are answered within 24 hours, Monday through Saturday.</p>
+                </div>
+              </div>
+              <div class="contact-card">
+                <span class="cc-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                </span>
+                <div>
+                  <h4>Soft-pull to start</h4>
+                  <p>Pre-qualification begins with a soft credit check &mdash; no impact to your score.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrap reveal-right">
+            <form id="contact-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="full-name">Full name *</label>
+                  <input type="text" id="full-name" name="full-name" autocomplete="name" placeholder="Your name" />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" autocomplete="email" placeholder="you@company.com" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 555-5555" />
+                </div>
+                <div class="form-group">
+                  <label for="interest">I&rsquo;m interested in</label>
+                  <select id="interest" name="interest">
+                    <option value="">Select a program</option>
+                    <option value="rental">Rental</option>
+                    <option value="leasing">Leasing</option>
+                    <option value="lease-to-purchase">Lease-to-Purchase</option>
+                    <option value="purchase">Buying a truck / trailer</option>
+                    <option value="other">Something else</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" placeholder="Tell us what you're looking for — unit type, timeline, budget, or an Asset ID from the inventory page."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                Send Request
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+              <p class="form-note">
+                By submitting, you agree to be contacted about your request. We never share
+                your information with third parties without your consent.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="compliance">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="navbar-brand" aria-label="Right Truck Deal - Home">
+            <span class="brand-mark" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+              </svg>
+            </span>
+            <span class="brand-text">
+              Right Truck Deal
+              <small>Sales &middot; Leasing &middot; Rentals</small>
+            </span>
+          </a>
+          <p>
+            Truck and trailer sales, leasing, lease-to-purchase, and rentals with
+            transparent pricing and documented terms. Based in St. Charles, Missouri.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="sales.html">Inventory</a></li>
+            <li><a href="index.html#programs">Programs</a></li>
+            <li><a href="index.html#process">How It Works</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Programs</h4>
+          <ul>
+            <li><a href="index.html#programs">Rental</a></li>
+            <li><a href="index.html#programs">Leasing</a></li>
+            <li><a href="index.html#programs">Lease-to-Purchase</a></li>
+            <li><a href="sales.html">Sales</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Compliance &amp; Transparency</h4>
+          <p>
+            We begin with a soft-pull credit pre-qualification. All programs are documented
+            with clear terms including pricing, responsibilities, and applicable
+            return/option details. Inventory photos and specs are representative;
+            availability and final terms are confirmed at booking or contract.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="footer-year">2026</span> Right Truck Deal LLC. All rights reserved. &middot; righttruckdeal.us</p>
+        <div class="footer-bottom-links">
+          <a href="index.html#compliance">Privacy Policy</a>
+          <a href="index.html#compliance">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+
 </body>
 </html>
