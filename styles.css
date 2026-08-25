@@ -2743,20 +2743,22 @@ main {
 
 /* ------------------------------------------------------------
    20. SCROLL REVEAL
+   (hidden states only apply when the html.js class is set by the
+   inline head script, so content stays visible without JS)
    ------------------------------------------------------------ */
-.reveal {
+.js .reveal {
   opacity: 0;
   transform: translateY(32px);
   transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
 }
 
-.reveal-left {
+.js .reveal-left {
   opacity: 0;
   transform: translateX(-40px);
   transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
 }
 
-.reveal-right {
+.js .reveal-right {
   opacity: 0;
   transform: translateX(40px);
   transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
