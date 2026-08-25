@@ -1,1427 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Right Truck Deal | Commercial Truck Rental, Leasing & Sales</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0a1628;
-    --navy-mid: #0f2040;
-    --blue: #1a4fc4;
-    --blue-bright: #2563eb;
-    --gold: #f59e0b;
-    --gold-light: #fbbf24;
-    --white: #ffffff;
-    --gray-50: #f8fafc;
-    --gray-100: #f1f5f9;
-    --gray-200: #e2e8f0;
-    --gray-400: #94a3b8;
-    --gray-600: #475569;
-    --gray-800: #1e293b;
-    --text: #0f172a;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Barlow', sans-serif;
-    font-weight: 400;
-    color: var(--text);
-    background: var(--white);
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 clamp(1rem, 4vw, 3rem);
-    height: 68px;
-    background: var(--navy);
-    border-bottom: 2px solid var(--blue);
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-
-  .logo-icon {
-    width: 36px; height: 36px;
-    background: var(--blue-bright);
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-
-  .logo-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 1.25rem;
-    color: var(--white);
-    letter-spacing: 0.5px;
-    line-height: 1;
-  }
-  .logo-text span { color: var(--gold); }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--white); }
-
-  .nav-cta {
-    background: var(--gold);
-    color: var(--navy) !important;
-    padding: 8px 20px;
-    border-radius: 4px;
-    font-weight: 700 !important;
-    transition: background 0.2s !important;
-  }
-  .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
-
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-  }
-  .hamburger span {
-    display: block;
-    width: 24px; height: 2px;
-    background: var(--white);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100svh;
-    background: var(--navy);
-    display: grid;
-    grid-template-rows: 1fr auto;
-    padding-top: 68px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(to right, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.7) 50%, rgba(10,22,40,0.4) 100%),
-      url('images/2026-cascadia.png') center/cover no-repeat;
-  }
-
-  /* Diagonal accent line */
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 45%;
-    height: 100%;
-    background: linear-gradient(135deg, transparent 50%, rgba(26,79,196,0.12) 50%);
-    pointer-events: none;
-  }
-
-  .hero-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: clamp(3rem, 8vw, 5rem) clamp(1.5rem, 4vw, 3rem);
-    width: 100%;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(245,158,11,0.12);
-    border: 1px solid rgba(245,158,11,0.35);
-    color: var(--gold);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 100px;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: inline-block;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  .hero h1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    line-height: 0.95;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: -1px;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s 0.1s ease both;
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    color: var(--gold);
-    display: block;
-  }
-
-  .hero-sub {
-    font-size: 1.05rem;
-    line-height: 1.65;
-    color: var(--gray-400);
-    max-width: 480px;
-    margin-bottom: 2rem;
-    animation: fadeUp 0.6s 0.2s ease both;
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 2.5rem;
-    animation: fadeUp 0.6s 0.3s ease both;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--blue-bright);
-    color: var(--white);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 14px 28px;
-    border-radius: 6px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    color: var(--white);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 13px 28px;
-    border-radius: 6px;
-    border: 2px solid rgba(255,255,255,0.25);
-    text-decoration: none;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.05); }
-
-  .hero-trust {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    animation: fadeUp 0.6s 0.4s ease both;
-  }
-
-  .trust-chip {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--gray-400);
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-  .trust-chip .check {
-    width: 18px; height: 18px;
-    background: rgba(34,197,94,0.2);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-
-  /* Hero right - stat cards */
-  .hero-right {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    animation: fadeLeft 0.8s 0.2s ease both;
-  }
-
-  @keyframes fadeLeft {
-    from { opacity: 0; transform: translateX(40px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .stat-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 1.5rem;
-    backdrop-filter: blur(10px);
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .stat-card:hover {
-    border-color: rgba(26,79,196,0.4);
-    background: rgba(26,79,196,0.08);
-  }
-
-  .stat-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
-
-  .stat-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-400);
-  }
-
-  .stat-icon {
-    width: 32px; height: 32px;
-    background: rgba(26,79,196,0.3);
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-  }
-
-  .stat-value {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 2.2rem;
-    color: var(--white);
-    line-height: 1;
-  }
-  .stat-value span {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--gold);
-    margin-left: 4px;
-  }
-
-  .stat-desc {
-    font-size: 0.8rem;
-    color: var(--gray-600);
-    margin-top: 4px;
-  }
-
-  /* ── TRUST BAR ── */
-  .trust-bar {
-    background: var(--blue-bright);
-    padding: 1rem clamp(1.5rem, 4vw, 3rem);
-    display: flex;
-    justify-content: center;
-    gap: clamp(1.5rem, 4vw, 4rem);
-    flex-wrap: wrap;
-  }
-
-  .trust-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--white);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.5px;
-  }
-
-  .trust-item-icon { font-size: 18px; opacity: 0.9; }
-
-  /* ── SECTIONS ── */
-  section { padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 4vw, 3rem); }
-
-  .container { max-width: 1200px; margin: 0 auto; }
-
-  .section-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--blue-bright);
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 4vw, 3rem);
-    text-transform: uppercase;
-    line-height: 1.05;
-    color: var(--navy);
-    margin-bottom: 1rem;
-  }
-
-  .section-sub {
-    font-size: 1.05rem;
-    color: var(--gray-600);
-    max-width: 540px;
-    line-height: 1.65;
-  }
-
-  /* ── SERVICES ── */
-  .services { background: var(--gray-50); }
-
-  .services-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .service-card {
-    background: var(--white);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--gray-200);
-    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-    position: relative;
-  }
-  .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    border-color: var(--blue-bright);
-  }
-
-  .service-card-badge {
-    position: absolute;
-    top: 1rem; right: 1rem;
-    background: var(--gold);
-    color: var(--navy);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.7rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 100px;
-    z-index: 1;
-  }
-
-  .service-card-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--blue) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-  }
-
-  .service-card-body { padding: 1.5rem; }
-
-  .service-card-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 1.35rem;
-    text-transform: uppercase;
-    color: var(--navy);
-    margin-bottom: 0.5rem;
-  }
-
-  .service-card-desc {
-    font-size: 0.9rem;
-    color: var(--gray-600);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  .service-bullets {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 1.25rem;
-  }
-
-  .service-bullets li {
-    font-size: 0.85rem;
-    color: var(--gray-600);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .service-bullets li::before {
-    content: '\2713';
-    width: 16px; height: 16px;
-    background: rgba(37,99,235,0.1);
-    color: var(--blue-bright);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .service-card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--blue-bright);
-    text-decoration: none;
-    transition: gap 0.2s;
-  }
-  .service-card-link:hover { gap: 10px; }
-
-  /* ── WHY CHOOSE ── */
-  .why {
-    background: var(--navy);
-    color: var(--white);
-  }
-
-  .why-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .why .section-title { color: var(--white); }
-
-  .why-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    margin-top: 2rem;
-  }
-
-  .why-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1.25rem;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.06);
-    background: rgba(255,255,255,0.03);
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .why-item:hover {
-    background: rgba(37,99,235,0.12);
-    border-color: rgba(37,99,235,0.3);
-  }
-
-  .why-item-icon {
-    width: 40px; height: 40px;
-    min-width: 40px;
-    background: rgba(37,99,235,0.25);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-
-  .why-item h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    color: var(--white);
-    margin-bottom: 3px;
-  }
-
-  .why-item p { font-size: 0.875rem; color: var(--gray-400); line-height: 1.55; }
-
-  .why-visual {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .why-stat {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-  }
-  .why-stat:first-child { grid-column: span 2; background: rgba(37,99,235,0.2); border-color: rgba(37,99,235,0.35); }
-
-  .why-stat-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 3rem;
-    color: var(--white);
-    line-height: 1;
-  }
-  .why-stat-num em { color: var(--gold); font-style: normal; }
-
-  .why-stat-label {
-    font-size: 0.8rem;
-    color: var(--gray-400);
-    margin-top: 4px;
-    font-weight: 500;
-  }
-
-  /* ── ABOUT ── */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .about-visual {
-    background: linear-gradient(to top, rgba(10,22,40,0.7), rgba(10,22,40,0.3)), url('images/2026-cascadia.png') center/cover no-repeat;
-    border-radius: 16px;
-    padding: 3rem 2rem;
-    position: relative;
-    overflow: hidden;
-    min-height: 360px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .about-visual::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .about-visual-icon {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -55%);
-    opacity: 0.1;
-  }
-
-  .about-address {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
-    padding: 1.25rem;
-    color: var(--white);
-    position: relative;
-    z-index: 1;
-  }
-
-  .about-address h4 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.75rem;
-  }
-
-  .about-address p { font-size: 0.875rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
-  .about-address a { color: var(--white); text-decoration: none; font-weight: 600; }
-
-  .about-text .section-sub { margin-bottom: 2rem; }
-
-  .about-highlights {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .highlight {
-    padding: 1rem;
-    background: var(--gray-50);
-    border-radius: 8px;
-    border-left: 3px solid var(--blue-bright);
-  }
-
-  .highlight h4 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: var(--navy);
-    margin-bottom: 3px;
-  }
-
-  .highlight p { font-size: 0.8rem; color: var(--gray-600); }
-
-  /* ── FAQ ── */
-  .faq { background: var(--gray-50); }
-
-  .faq-header { text-align: center; margin-bottom: 3rem; }
-  .faq-header .section-sub { margin: 0 auto; }
-
-  .faq-list {
-    max-width: 720px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .faq-item {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .faq-item:hover { border-color: var(--blue-bright); }
-
-  .faq-q {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 1.25rem 1.5rem;
-    text-align: left;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1.05rem;
-    text-transform: uppercase;
-    color: var(--navy);
-    transition: color 0.2s;
-  }
-  .faq-q:hover { color: var(--blue-bright); }
-
-  .faq-toggle {
-    width: 24px; height: 24px;
-    min-width: 24px;
-    background: var(--gray-100);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    transition: background 0.2s, transform 0.3s;
-    color: var(--blue-bright);
-  }
-
-  .faq-item.open .faq-toggle { background: var(--blue-bright); color: var(--white); transform: rotate(45deg); }
-
-  .faq-a {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease, padding 0.2s;
-    font-size: 0.9rem;
-    color: var(--gray-600);
-    line-height: 1.65;
-    padding: 0 1.5rem;
-  }
-  .faq-item.open .faq-a { max-height: 200px; padding: 0 1.5rem 1.25rem; }
-
-  /* ── CONTACT ── */
-  .contact { background: var(--navy); }
-
-  .contact .section-label,
-  .contact .section-title { color: var(--white); }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-    margin-top: 3rem;
-  }
-
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-
-  label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 0.8rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--gray-400);
-  }
-
-  input, select, textarea {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
-    padding: 12px 14px;
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.95rem;
-    color: var(--white);
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
-    width: 100%;
-  }
-  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.25); }
-  input:focus, select:focus, textarea:focus {
-    border-color: var(--blue-bright);
-    background: rgba(37,99,235,0.1);
-  }
-  select { cursor: pointer; }
-  select option { background: var(--navy-mid); color: var(--white); }
-  textarea { resize: vertical; min-height: 100px; }
-
-  .form-submit {
-    background: var(--gold);
-    color: var(--navy);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 14px 32px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: background 0.2s, transform 0.15s;
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-  .contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .contact-info-desc {
-    font-size: 1rem;
-    color: var(--gray-400);
-    line-height: 1.65;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .contact-detail {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .contact-detail-icon {
-    width: 40px; height: 40px;
-    min-width: 40px;
-    background: rgba(37,99,235,0.25);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 17px;
-  }
-
-  .contact-detail h4 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 3px;
-  }
-
-  .contact-detail a, .contact-detail p {
-    font-size: 0.95rem;
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .contact-detail a:hover { color: var(--gold); }
-
-  /* ── FOOTER ── */
-  footer {
-    background: #060e1c;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 2rem clamp(1.5rem, 4vw, 3rem);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  footer p {
-    font-size: 0.85rem;
-    color: var(--gray-600);
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-  }
-
-  .footer-links a {
-    font-size: 0.85rem;
-    color: var(--gray-600);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--white); }
-
-  /* ── MOBILE NAV ── */
-  .mobile-menu {
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 68px; left: 0; right: 0;
-    background: var(--navy);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding: 1.5rem;
-    gap: 1rem;
-    z-index: 99;
-  }
-
-  .mobile-menu.open { display: flex; }
-
-  .mobile-menu a {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    text-decoration: none;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    transition: color 0.2s;
-  }
-  .mobile-menu a:hover { color: var(--white); }
-  .mobile-menu a:last-child { color: var(--gold); border: none; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .hero-content { grid-template-columns: 1fr; }
-    .hero-right { flex-direction: row; flex-wrap: wrap; }
-    .stat-card { flex: 1; min-width: 200px; }
-    .services-grid { grid-template-columns: 1fr; }
-    .why-grid { grid-template-columns: 1fr; }
-    .why-visual { display: none; }
-    .about-grid { grid-template-columns: 1fr; }
-    .contact-grid { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    footer { flex-direction: column; align-items: flex-start; }
-  }
-
-  @media (max-width: 540px) {
-    .hero-right { display: none; }
-    .hero-actions { flex-direction: column; }
-    .hero-actions a { text-align: center; justify-content: center; }
-    .trust-bar { gap: 1rem; }
-    .about-highlights { grid-template-columns: 1fr; }
-    .why-list { gap: 0.75rem; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Right Truck Deal LLC — semi truck and trailer sales, leasing, lease-to-purchase, and rentals in St. Charles, Missouri. Transparent terms, soft-pull pre-qualification, and flexible programs for owner-operators and fleets."
+  />
+  <title>Right Truck Deal LLC | Truck &amp; Trailer Sales, Leasing &amp; Rentals</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a101f'/%3E%3Cpath d='M50 26h-7.5V16H12a4 4 0 0 0-4 4v22h4a7 7 0 0 0 14 0h12a7 7 0 0 0 14 0h4V34l-6-8zM19 46.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm29.5-18 4.4 5.5h-8.4v-5.5h4zM45 46.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z' fill='%23e8a33c'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo">
-    <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg></div>
-    <div class="logo-text">Right <span>Truck</span> Deal</div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#why-choose">Why Us</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
-  </ul>
-  <div class="hamburger" onclick="toggleMenu()" id="hamburger">
-    <span></span><span></span><span></span>
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Right Truck Deal - Home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          Right Truck Deal
+          <small>Sales &middot; Leasing &middot; Rentals</small>
+        </span>
+      </a>
+
+      <ul class="navbar-nav nav-menu" role="menubar">
+        <li role="none"><a href="index.html" role="menuitem" class="active">Home</a></li>
+        <li role="none"><a href="sales.html" role="menuitem">Inventory</a></li>
+        <li role="none"><a href="#programs" role="menuitem">Programs</a></li>
+        <li role="none"><a href="#process" role="menuitem">How It Works</a></li>
+        <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
+      </ul>
+
+      <a href="#contact" class="btn btn-primary navbar-cta">Request Quote</a>
+
+      <button
+        class="navbar-toggle mobile-menu-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <ul class="mobile-menu-nav" role="menu">
+      <li role="none"><a href="index.html" role="menuitem" class="active">Home</a></li>
+      <li role="none"><a href="sales.html" role="menuitem">Inventory</a></li>
+      <li role="none"><a href="#programs" role="menuitem">Programs</a></li>
+      <li role="none"><a href="#process" role="menuitem">How It Works</a></li>
+      <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-primary btn-lg" style="width: 100%;">Request Quote</a>
   </div>
-</nav>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#services" onclick="closeMenu()">Services</a>
-  <a href="#why-choose" onclick="closeMenu()">Why Us</a>
-  <a href="#about" onclick="closeMenu()">About Us</a>
-  <a href="#faq" onclick="closeMenu()">FAQ</a>
-  <a href="tel:+13144643311" onclick="closeMenu()">(314) 464-3311</a>
-  <a href="#contact" onclick="closeMenu()">Get a Free Quote</a>
-</div>
+  <main>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="hero-left">
-      <div class="hero-badge">Serving Owner-Operators Since 2017</div>
-      <h1>Your Trusted<em>Commercial</em>Partner</h1>
-      <p class="hero-sub">Flexible rental, leasing, and purchase programs for owner-operators and fleets. Newer equipment (2023+), transparent pricing, and soft-pull credit pre-qualification.</p>
-      <div class="hero-actions">
-        <a href="sales.html" class="btn-primary">Browse Inventory &rarr;</a>
-        <a href="#contact" class="btn-secondary">Request a Quote</a>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero-stage">
+          <span class="hero-eyebrow"><span class="dot"></span>St. Charles, Missouri &middot; Serving Since 2017</span>
+        </div>
+        <h1 class="hero-title hero-stage">
+          The Right Truck.<br />
+          <span class="accent">The Right Deal.</span>
+        </h1>
+        <p class="hero-sub hero-stage">
+          Semi trucks and trailers for owner-operators and fleets &mdash; buy, rent, lease,
+          or lease-to-purchase with transparent pricing, documented terms, and a
+          soft-pull pre-qualification that won&rsquo;t touch your credit score.
+        </p>
+        <div class="hero-actions hero-stage">
+          <a href="sales.html" class="btn btn-primary btn-lg">
+            Browse Inventory
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost-light btn-secondary btn-lg">Get Pre-Approved</a>
+        </div>
+        <div class="hero-chips hero-stage">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Rental
+          </span>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Leasing
+          </span>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Lease-to-Purchase
+          </span>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Sales
+          </span>
+        </div>
       </div>
-      <div class="hero-trust">
-        <div class="trust-chip"><span class="check"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> No Hard Credit Check</div>
-        <div class="trust-chip"><span class="check"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Flexible Terms</div>
-        <div class="trust-chip"><span class="check"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Late-Model Equipment</div>
+
+      <div class="hero-scroll" aria-hidden="true">Scroll</div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Freightliner</span><span>Volvo</span><span>Kenworth</span><span>Peterbilt</span><span>International</span><span>Great Dane</span><span>Utility</span><span>Wabash</span>
+        <span>Freightliner</span><span>Volvo</span><span>Kenworth</span><span>Peterbilt</span><span>International</span><span>Great Dane</span><span>Utility</span><span>Wabash</span>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="stat-card">
-        <div class="stat-card-top">
-          <div class="stat-label">Years in Business</div>
-          <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
-        </div>
-        <div class="stat-value">8+ <span>Years</span></div>
-        <div class="stat-desc">Serving the industry since 2017</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-top">
-          <div class="stat-label">Fleet Model Year</div>
-          <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg></div>
-        </div>
-        <div class="stat-value">2023+ <span>Fleet</span></div>
-        <div class="stat-desc">Late-model, fuel-efficient units</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-top">
-          <div class="stat-label">Pricing</div>
-          <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        </div>
-        <div class="stat-value">100% <span>Clear</span></div>
-        <div class="stat-desc">Transparent terms, no hidden fees</div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="trust-item"><span class="trust-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> Soft-Pull Credit Check</div>
-  <div class="trust-item"><span class="trust-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> DOT Compliant Fleet</div>
-  <div class="trust-item"><span class="trust-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span> Quick Availability</div>
-  <div class="trust-item"><span class="trust-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span> Clear Contracts</div>
-</div>
-
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="container">
-    <div class="services-header">
-      <div>
-        <div class="section-label">What We Offer</div>
-        <h2 class="section-title">Fleet Services<br>Tailored to You</h2>
-      </div>
-      <p class="section-sub">From short-term rentals to full fleet acquisitions, we have the right solution for your logistics needs.</p>
-    </div>
-    <div class="services-grid">
-
-      <div class="service-card">
-        <div class="service-card-badge">Most Popular</div>
-        <div class="service-card-img" style="background: linear-gradient(to top, rgba(10,22,40,0.5), transparent), url('images/1772839605066.png') center/cover no-repeat;">
+    <!-- ============ STATS ============ -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat reveal">
+            <div class="stat-value"><span class="count-up" data-count-to="2017">2017</span></div>
+            <div class="stat-label">Serving drivers since</div>
+          </div>
+          <div class="stat reveal" data-delay="1">
+            <div class="stat-value"><span class="count-up" data-count-to="4">4</span></div>
+            <div class="stat-label">Flexible programs</div>
+          </div>
+          <div class="stat reveal" data-delay="2">
+            <div class="stat-value"><span class="count-up" data-count-to="24">24</span><sup>h</sup></div>
+            <div class="stat-label">Quote response time</div>
+          </div>
+          <div class="stat reveal" data-delay="3">
+            <div class="stat-value"><span class="count-up" data-count-to="0">0</span></div>
+            <div class="stat-label">Hard credit pulls to pre-qualify</div>
+          </div>
         </div>
-        <div class="service-card-body">
-          <h3 class="service-card-title">Commercial Rentals</h3>
-          <p class="service-card-desc">Short-term flexibility for seasonal demands and project-based needs. Daily, weekly, and monthly rates available.</p>
-          <ul class="service-bullets">
-            <li>No long-term commitment</li>
-            <li>Maintenance included</li>
-            <li>Quick availability</li>
+      </div>
+    </section>
+
+    <!-- ============ PROGRAMS ============ -->
+    <section class="section" id="programs">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">What we offer</span>
+          <h2 class="section-title">Four ways to get on the road</h2>
+          <p class="section-sub">
+            Every operation is different. Whether you need a truck for a season or a
+            path to ownership, there&rsquo;s a program built for how you run.
+          </p>
+        </div>
+
+        <div class="programs-grid">
+          <article class="program-card reveal">
+            <span class="program-num">/ 01</span>
+            <div class="program-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Rental</h3>
+            <p>Short-term capacity without long-term commitment. Cover a busy season, a new contract, or a truck in the shop.</p>
+            <ul>
+              <li>Flexible weekly and monthly terms</li>
+              <li>Road-ready, maintained equipment</li>
+              <li>Fast turnaround on availability</li>
+            </ul>
+            <a href="#contact" class="program-link">
+              Ask about rentals
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="program-card reveal" data-delay="1">
+            <span class="program-num">/ 02</span>
+            <div class="program-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3>Leasing</h3>
+            <p>Predictable monthly costs and newer equipment without the upfront capital of a purchase.</p>
+            <ul>
+              <li>Clear, documented lease terms</li>
+              <li>Lower entry cost than buying</li>
+              <li>Options structured to your cash flow</li>
+            </ul>
+            <a href="#contact" class="program-link">
+              Explore leasing
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="program-card reveal" data-delay="1">
+            <span class="program-num">/ 03</span>
+            <div class="program-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <h3>Lease-to-Purchase</h3>
+            <p>Build toward ownership while you work. Payments apply toward a documented purchase option &mdash; no guesswork at the end.</p>
+            <ul>
+              <li>Path to owning your own truck</li>
+              <li>Purchase option spelled out in writing</li>
+              <li>Soft-pull pre-qualification to start</li>
+            </ul>
+            <a href="#contact" class="program-link">
+              Start the path
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="program-card reveal" data-delay="2">
+            <span class="program-num">/ 04</span>
+            <div class="program-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2a3 3 0 0 0 6 0h6a3 3 0 0 0 6 0h2v-5l-3-4z"/><circle cx="6" cy="17" r="1"/><circle cx="18" cy="17" r="1"/></svg>
+            </div>
+            <h3>Sales</h3>
+            <p>Inspected trucks and trailers at transparent prices. Financing assistance available for qualified buyers through third-party resources.</p>
+            <ul>
+              <li>Detailed specs and photos on every unit</li>
+              <li>No hidden fees at signing</li>
+              <li>Help connecting with financing</li>
+            </ul>
+            <a href="sales.html" class="program-link">
+              View inventory
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED INVENTORY (live from sheet) ============ -->
+    <section class="section section--gray" id="featured" hidden>
+      <div class="container">
+        <div class="featured-head reveal">
+          <div class="section-head">
+            <span class="eyebrow">On the lot now</span>
+            <h2 class="section-title">Featured units</h2>
+          </div>
+          <a href="sales.html" class="btn btn-secondary">
+            All inventory
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="featured-grid" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ SHOWCASE / WHY US ============ -->
+    <section class="section" id="why">
+      <div class="container">
+        <div class="showcase">
+          <div class="showcase-media reveal-left">
+            <div class="frame">
+              <img src="images/truck-trailer-sunset.jpg" alt="Semi truck with 53-foot dry van trailer at a distribution center at sunset" loading="lazy" />
+            </div>
+            <div class="badge-float">
+              <strong id="years-badge">9+</strong>
+              <small>Years on the road</small>
+            </div>
+          </div>
+
+          <div class="reveal-right">
+            <span class="eyebrow">Why Right Truck Deal</span>
+            <h2 class="section-title">Straight terms. No surprises.</h2>
+            <ul class="checklist">
+              <li>
+                <span class="check-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+                </span>
+                <div>
+                  <h4>Everything in writing</h4>
+                  <p>Pricing, responsibilities, and return or purchase options are documented in clear terms before you sign anything.</p>
+                </div>
+              </li>
+              <li>
+                <span class="check-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </span>
+                <div>
+                  <h4>Soft-pull pre-qualification</h4>
+                  <p>We start with a soft credit check &mdash; find out where you stand without any impact to your score.</p>
+                </div>
+              </li>
+              <li>
+                <span class="check-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                <div>
+                  <h4>Built for owner-operators</h4>
+                  <p>Programs shaped around how independent drivers and small fleets actually earn &mdash; not one-size-fits-all contracts.</p>
+                </div>
+              </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary">
+              Talk to our team
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="section section--dark" id="process">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">How it works</span>
+          <h2 class="section-title">From first call to first load</h2>
+        </div>
+
+        <div class="process-grid">
+          <div class="process-step reveal">
+            <span class="process-num">01</span>
+            <h3>Tell us what you need</h3>
+            <p>Truck, trailer, or both &mdash; share your routes, budget, and timeline. We&rsquo;ll point you to the right units and the right program.</p>
+          </div>
+          <div class="process-step reveal" data-delay="1">
+            <span class="process-num">02</span>
+            <h3>Pre-qualify with a soft pull</h3>
+            <p>A soft-pull credit check gives you real numbers up front, with zero impact on your credit score.</p>
+          </div>
+          <div class="process-step reveal" data-delay="2">
+            <span class="process-num">03</span>
+            <h3>Review clear terms</h3>
+            <p>Every agreement documents pricing, responsibilities, and return or purchase options &mdash; read it, question it, then sign it.</p>
+          </div>
+          <div class="process-step reveal" data-delay="3">
+            <span class="process-num">04</span>
+            <h3>Pick up and roll</h3>
+            <p>Complete the paperwork, take the keys in St. Charles, and get back to what pays: driving.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <span class="eyebrow">Questions</span>
+          <h2 class="section-title">Frequently asked</h2>
+        </div>
+
+        <div class="faq-list reveal">
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Will pre-qualifying hurt my credit score?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>No. We begin with a soft-pull credit pre-qualification, which does not affect your credit score. A hard inquiry only happens later if you move forward with financing and authorize it.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              What&rsquo;s the difference between leasing and lease-to-purchase?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>A standard lease gives you use of the truck for a set term with the option to return it at the end. Lease-to-purchase adds a documented purchase option, so your payments build toward owning the truck outright. Both come with clear written terms covering pricing, responsibilities, and end-of-term options.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Can you help me get financing to buy a truck?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. We can connect qualified customers with third-party financing resources and walk you through what lenders typically look for. Start with the pre-approval form and we&rsquo;ll take it from there.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Are the photos and specs on the inventory page exact?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>Inventory photos and specs are representative. Availability and final terms are confirmed at the time of booking or contract &mdash; we&rsquo;ll always verify the exact unit and its condition with you before anything is signed.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Where are you located?
+              <span class="faq-ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>We&rsquo;re based in St. Charles, Missouri, just outside St. Louis &mdash; an easy reach from I-70 for drivers across the Midwest. Reach out through the contact form to arrange a visit or a walkaround of any unit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA BAND ============ -->
+    <section class="cta-band">
+      <div class="container">
+        <div class="reveal">
+          <h2>Ready to <span class="accent">move?</span></h2>
+          <p>Tell us what you&rsquo;re hauling and we&rsquo;ll match you with the right truck, trailer, and program &mdash; usually within one business day.</p>
+        </div>
+        <div class="cta-actions reveal" data-delay="1">
+          <a href="sales.html" class="btn btn-primary btn-lg">Browse Inventory</a>
+          <a href="#contact" class="btn btn-ghost-light btn-lg">Request a Quote</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-layout">
+          <div class="contact-info reveal-left">
+            <div class="section-head">
+              <span class="eyebrow">Get in touch</span>
+              <h2 class="section-title">Request a quote</h2>
+              <p class="section-sub">
+                Send the form and our team will follow up within 24 hours with
+                availability, pricing, and next steps.
+              </p>
+            </div>
+
+            <div class="contact-cards">
+              <div class="contact-card">
+                <span class="cc-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
+                <div>
+                  <h4>Location</h4>
+                  <p>St. Charles, Missouri &mdash; serving owner-operators and fleets across the Midwest.</p>
+                </div>
+              </div>
+              <div class="contact-card">
+                <span class="cc-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </span>
+                <div>
+                  <h4>Response time</h4>
+                  <p>Quote requests are answered within 24 hours, Monday through Saturday.</p>
+                </div>
+              </div>
+              <div class="contact-card">
+                <span class="cc-ic">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                </span>
+                <div>
+                  <h4>Soft-pull to start</h4>
+                  <p>Pre-qualification begins with a soft credit check &mdash; no impact to your score.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrap reveal-right">
+            <form id="contact-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="full-name">Full name *</label>
+                  <input type="text" id="full-name" name="full-name" autocomplete="name" placeholder="Your name" />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" autocomplete="email" placeholder="you@company.com" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 555-5555" />
+                </div>
+                <div class="form-group">
+                  <label for="interest">I&rsquo;m interested in</label>
+                  <select id="interest" name="interest">
+                    <option value="">Select a program</option>
+                    <option value="rental">Rental</option>
+                    <option value="leasing">Leasing</option>
+                    <option value="lease-to-purchase">Lease-to-Purchase</option>
+                    <option value="purchase">Buying a truck / trailer</option>
+                    <option value="other">Something else</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" placeholder="Tell us what you're looking for — unit type, timeline, budget, or an Asset ID from the inventory page."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                Send Request
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+              <p class="form-note">
+                By submitting, you agree to be contacted about your request. We never share
+                your information with third parties without your consent.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="compliance">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="navbar-brand" aria-label="Right Truck Deal - Home">
+            <span class="brand-mark" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+              </svg>
+            </span>
+            <span class="brand-text">
+              Right Truck Deal
+              <small>Sales &middot; Leasing &middot; Rentals</small>
+            </span>
+          </a>
+          <p>
+            Truck and trailer sales, leasing, lease-to-purchase, and rentals with
+            transparent pricing and documented terms. Based in St. Charles, Missouri.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="sales.html">Inventory</a></li>
+            <li><a href="index.html#programs">Programs</a></li>
+            <li><a href="index.html#process">How It Works</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
           </ul>
-          <a href="#contact" class="service-card-link">Get Rental Quote &rarr;</a>
         </div>
-      </div>
 
-      <div class="service-card">
-        <div class="service-card-img" style="background: linear-gradient(to top, rgba(10,22,40,0.5), transparent), url('images/1772838805334.png') center/cover no-repeat;">
-        </div>
-        <div class="service-card-body">
-          <h3 class="service-card-title">Leasing Programs</h3>
-          <p class="service-card-desc">Cost-effective long-term solutions without the ownership burden. Full-service maintenance options available.</p>
-          <ul class="service-bullets">
-            <li>Lease-to-purchase available</li>
-            <li>Predictable monthly costs</li>
-            <li>Fleet scalability</li>
+        <div class="footer-col">
+          <h4>Programs</h4>
+          <ul>
+            <li><a href="index.html#programs">Rental</a></li>
+            <li><a href="index.html#programs">Leasing</a></li>
+            <li><a href="index.html#programs">Lease-to-Purchase</a></li>
+            <li><a href="sales.html">Sales</a></li>
           </ul>
-          <a href="#contact" class="service-card-link">Explore Leasing &rarr;</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Compliance &amp; Transparency</h4>
+          <p>
+            We begin with a soft-pull credit pre-qualification. All programs are documented
+            with clear terms including pricing, responsibilities, and applicable
+            return/option details. Inventory photos and specs are representative;
+            availability and final terms are confirmed at booking or contract.
+          </p>
         </div>
       </div>
 
-      <div class="service-card">
-        <div class="service-card-img" style="background: linear-gradient(to top, rgba(10,22,40,0.5), transparent), url('images/1772838633599.png') center/cover no-repeat;">
-        </div>
-        <div class="service-card-body">
-          <h3 class="service-card-title">Fleet Sales</h3>
-          <p class="service-card-desc">Purchase high-quality, pre-owned units from our fleet. Well maintained with complete service history available.</p>
-          <ul class="service-bullets">
-            <li>Detailed service records</li>
-            <li>Financing assistance</li>
-            <li>Inspection reports</li>
-          </ul>
-          <a href="sales.html" class="service-card-link">View Inventory &rarr;</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- WHY CHOOSE -->
-<section class="why" id="why-choose">
-  <div class="container">
-    <div class="why-grid">
-      <div>
-        <div class="section-label" style="color:var(--gold)">Why Choose Us</div>
-        <h2 class="section-title">Your Success Is<br>Our Priority</h2>
-        <p style="color:var(--gray-400);line-height:1.65;font-size:1rem;margin-bottom:0.5rem">We provide more than equipment &mdash; we deliver a partnership built on transparency, reliability, and flexible solutions.</p>
-        <div class="why-list">
-          <div class="why-item">
-            <div class="why-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-            <div>
-              <h3>Transparent Pricing</h3>
-              <p>No hidden fees or surprise charges. Every cost is documented upfront before you commit.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <div class="why-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-            <div>
-              <h3>Maintenance Standards</h3>
-              <p>Routine inspections and preventative maintenance keep our fleet road-ready and reliable.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <div class="why-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
-            <div>
-              <h3>Late-Model Equipment</h3>
-              <p>Our fleet features 2023+ model years for fuel efficiency and modern cab comfort.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <div class="why-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <div>
-              <h3>Compliance Ready</h3>
-              <p>All vehicles meet current ELD, emissions, and DOT safety standards.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="why-visual">
-        <div class="why-stat">
-          <div class="why-stat-num">8<em>+</em></div>
-          <div class="why-stat-label">Years Serving Owner-Operators</div>
-        </div>
-        <div class="why-stat">
-          <div class="why-stat-num">2023<em>+</em></div>
-          <div class="why-stat-label">Fleet Model Year</div>
-        </div>
-        <div class="why-stat">
-          <div class="why-stat-num">100<em>%</em></div>
-          <div class="why-stat-label">Transparent Pricing</div>
-        </div>
-        <div class="why-stat">
-          <div class="why-stat-num">0</div>
-          <div class="why-stat-label">Hard Credit Checks</div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="footer-year">2026</span> Right Truck Deal LLC. All rights reserved. &middot; righttruckdeal.us</p>
+        <div class="footer-bottom-links">
+          <a href="index.html#compliance">Privacy Policy</a>
+          <a href="index.html#compliance">Terms of Service</a>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-visual">
-        <div class="about-visual-icon"></div>
-        <div class="about-address">
-          <h4 style="display:flex;align-items:center;gap:6px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Headquarters</h4>
-          <p>3088 Elm Point Industrial Dr<br>St. Charles, MO 63301<br><br>
-          <a href="tel:+13144643311">(314) 464-3311</a><br>
-          <a href="mailto:info@righttruckdeal.us">info@righttruckdeal.us</a><br><br>
-          Mon&ndash;Fri: 8am &ndash; 5pm CST</p>
-        </div>
-      </div>
-      <div class="about-text">
-        <div class="section-label">About Us</div>
-        <h2 class="section-title">Built for<br>Owner-Operators</h2>
-        <p class="section-sub">Right Truck Deal LLC was founded in 2017 in Missouri and is headquartered in St. Charles. We provide flexible equipment solutions to support owner-operators and fleets with short-term and long-term needs.</p>
-        <p style="font-size:0.95rem;color:var(--gray-600);line-height:1.65;margin-top:1rem">Our mission is straightforward: deliver reliable trucks with transparent terms so you can focus on growing your business, not worrying about your equipment.</p>
-        <div class="about-highlights">
-          <div class="highlight">
-            <h4>DOT Inspections</h4>
-            <p>All units pass DOT safety inspections and federal compliance standards.</p>
-          </div>
-          <div class="highlight">
-            <h4>ELD &amp; Emissions</h4>
-            <p>Every truck meets current electronic logging and emissions requirements.</p>
-          </div>
-          <div class="highlight">
-            <h4>Preventative Maint.</h4>
-            <p>Scheduled service intervals and proactive repairs minimize downtime.</p>
-          </div>
-          <div class="highlight">
-            <h4>Full Documentation</h4>
-            <p>Complete service history and specs provided before you commit.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <script src="app.js"></script>
 
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <div class="container">
-    <div class="faq-header">
-      <div class="section-label">Common Questions</div>
-      <h2 class="section-title">Frequently Asked<br>Questions</h2>
-      <p class="section-sub">Quick answers about our rental, leasing, and purchasing process.</p>
-    </div>
-    <div class="faq-list">
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Do you run a hard credit check?
-          <span class="faq-toggle">+</span>
-        </button>
-        <div class="faq-a">No. We start with a soft-pull credit check for pre-qualification. This does not affect your credit score. A hard pull may only be required if you proceed with financing through a third-party lender.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          What lease terms do you offer?
-          <span class="faq-toggle">+</span>
-        </button>
-        <div class="faq-a">Short-term and long-term options are available, including lease-to-purchase depending on the unit and customer qualification. We work with you to find terms that fit your business needs.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Who is responsible for maintenance?
-          <span class="faq-toggle">+</span>
-        </button>
-        <div class="faq-a">Maintenance responsibility varies by program (rental vs. lease vs. purchase) and is clearly defined in the agreement before you commit. Rental programs typically include maintenance, while lease and purchase options may vary.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Do you have newer trucks available?
-          <span class="faq-toggle">+</span>
-        </button>
-        <div class="faq-a">Yes &mdash; newer fleet options starting from model year 2023 may be available, subject to inventory. Check our sales page or contact us for current availability.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Can you help with financing?
-          <span class="faq-toggle">+</span>
-        </button>
-        <div class="faq-a">Yes. We can help connect qualified customers with third-party financing resources for purchases. Our team will guide you through the available options based on your situation.</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="section-label" style="color:var(--gold)">Get In Touch</div>
-    <h2 class="section-title" style="color:var(--white)">Ready to Roll?</h2>
-    <div class="contact-grid">
-      <form class="contact-form" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" placeholder="John Smith" required>
-          </div>
-          <div class="form-group">
-            <label>Company Name</label>
-            <input type="text" placeholder="Your Company LLC">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" placeholder="john@company.com" required>
-          </div>
-          <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" placeholder="(314) 000-0000">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Interested In</label>
-          <select>
-            <option value="" disabled selected>Select a service</option>
-            <option>Rental / Quote</option>
-            <option>Short-Term Lease</option>
-            <option>Long-Term Lease</option>
-            <option>Lease-to-Purchase</option>
-            <option>Purchase</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea placeholder="Tell us about your needs..."></textarea>
-        </div>
-        <button type="submit" class="form-submit">Send Message &rarr;</button>
-        <div id="form-success" style="display:none;color:#4ade80;text-align:center;font-size:0.95rem;font-weight:600">Message sent! We'll be in touch shortly.</div>
-      </form>
-
-      <div class="contact-info">
-        <p class="contact-info-desc">Fill out the form or reach us directly. We're available Monday through Friday, 8am&ndash;5pm CST, and will respond promptly to all inquiries.</p>
-
-        <div class="contact-detail">
-          <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div>
-            <h4>Address</h4>
-            <p>3088 Elm Point Industrial Dr<br>St. Charles, MO 63301</p>
-          </div>
-        </div>
-
-        <div class="contact-detail">
-          <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.14h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8 8.09a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          <div>
-            <h4>Phone</h4>
-            <a href="tel:+13144643311">(314) 464-3311</a>
-          </div>
-        </div>
-
-        <div class="contact-detail">
-          <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div>
-            <h4>Email</h4>
-            <a href="mailto:info@righttruckdeal.us">info@righttruckdeal.us</a>
-          </div>
-        </div>
-
-        <div class="contact-detail">
-          <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div>
-            <h4>Hours</h4>
-            <p>Mon&ndash;Fri: 8am &ndash; 5pm CST</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p>&copy; 2026 Right Truck Deal LLC. All rights reserved. St. Charles, MO.</p>
-  <ul class="footer-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#why-choose">Why Us</a></li>
-    <li><a href="sales.html">Inventory</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#faq">FAQ</a></li>
-  </ul>
-</footer>
-
-<script>
-  function toggleMenu() {
-    var menu = document.getElementById('mobileMenu');
-    menu.classList.toggle('open');
-  }
-
-  function closeMenu() {
-    document.getElementById('mobileMenu').classList.remove('open');
-  }
-
-  function toggleFaq(btn) {
-    var item = btn.closest('.faq-item');
-    var isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(function(i) {
-      i.classList.remove('open');
-    });
-    if (!isOpen) {
-      item.classList.add('open');
-    }
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    var form = e.target;
-    var success = document.getElementById('form-success');
-    form.style.display = 'none';
-    success.style.display = 'block';
-  }
-</script>
 </body>
 </html>
