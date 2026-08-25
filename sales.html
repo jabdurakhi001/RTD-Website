@@ -9,36 +9,44 @@
   />
   <title>Inventory | Right Truck Deal LLC</title>
 
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a101f'/%3E%3Cpath d='M50 26h-7.5V16H12a4 4 0 0 0-4 4v22h4a7 7 0 0 0 14 0h12a7 7 0 0 0 14 0h4V34l-6-8zM19 46.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm29.5-18 4.4 5.5h-8.4v-5.5h4zM45 46.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z' fill='%23e8a33c'/%3E%3C/svg%3E" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar scrolled" role="navigation" aria-label="Main navigation">
     <div class="container">
       <a href="index.html" class="navbar-brand" aria-label="Right Truck Deal - Home">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
-        </svg>
-        Right Truck Deal
+        <span class="brand-mark" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          Right Truck Deal
+          <small>Sales &middot; Leasing &middot; Rentals</small>
+        </span>
       </a>
 
-      <!-- Desktop nav: app.js expects .nav-menu -->
       <ul class="navbar-nav nav-menu" role="menubar">
         <li role="none"><a href="index.html" role="menuitem">Home</a></li>
         <li role="none"><a href="sales.html" role="menuitem" class="active">Inventory</a></li>
-        <li role="none"><a href="index.html#services" role="menuitem">Leasing</a></li>
-        <li role="none"><a href="index.html#contact" role="menuitem">Financing</a></li>
-        <li role="none"><a href="index.html#contact" role="menuitem">Contact</a></li>
+        <li role="none"><a href="index.html#programs" role="menuitem">Programs</a></li>
+        <li role="none"><a href="index.html#process" role="menuitem">How It Works</a></li>
+        <li role="none"><a href="index.html#faq" role="menuitem">FAQ</a></li>
       </ul>
 
       <a href="index.html#contact" class="btn btn-primary navbar-cta">Request Quote</a>
 
-      <!-- Mobile toggle: app.js expects .mobile-menu-toggle -->
       <button
         class="navbar-toggle mobile-menu-toggle"
         aria-label="Toggle navigation menu"
@@ -55,21 +63,33 @@
     </div>
   </nav>
 
-  <!-- Mobile Menu: app.js toggles .nav-menu (desktop), so we keep this + minimal CSS -->
+  <!-- Mobile Menu -->
   <div id="mobile-menu-sales" class="mobile-menu" aria-hidden="true">
     <ul class="mobile-menu-nav" role="menu">
       <li role="none"><a href="index.html" role="menuitem">Home</a></li>
       <li role="none"><a href="sales.html" role="menuitem" class="active">Inventory</a></li>
-      <li role="none"><a href="index.html#services" role="menuitem">Leasing</a></li>
-      <li role="none"><a href="index.html#contact" role="menuitem">Financing</a></li>
-      <li role="none"><a href="index.html#contact" role="menuitem">Contact</a></li>
+      <li role="none"><a href="index.html#programs" role="menuitem">Programs</a></li>
+      <li role="none"><a href="index.html#process" role="menuitem">How It Works</a></li>
+      <li role="none"><a href="index.html#faq" role="menuitem">FAQ</a></li>
     </ul>
     <a href="index.html#contact" class="btn btn-primary btn-lg" style="width: 100%;">Request Quote</a>
   </div>
 
   <main>
 
-    <!-- Financing banner -->
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Trucks &amp; trailers on the lot</span>
+        <h1>Current Inventory</h1>
+        <p>
+          Every unit listed with real specs, real photos, and a transparent price.
+          Filter by year, make, mileage, or budget &mdash; or search directly by Asset ID.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ FINANCING BANNER ============ -->
     <section class="financing-banner">
       <div class="container">
         <div>
@@ -80,10 +100,9 @@
       </div>
     </section>
 
-    <!-- Inventory header -->
+    <!-- ============ TABS ============ -->
     <section class="inventory-header">
       <div class="container">
-        <h1>Current Inventory</h1>
         <div class="tabs" role="tablist" aria-label="Inventory type">
           <button class="tab-btn active" role="tab" aria-selected="true" data-tab="trucks">Trucks</button>
           <button class="tab-btn" role="tab" aria-selected="false" data-tab="trailers">Trailers</button>
@@ -91,7 +110,7 @@
       </div>
     </section>
 
-    <!-- Inventory section -->
+    <!-- ============ INVENTORY ============ -->
     <section class="inventory-section">
       <div class="container">
         <div class="inventory-layout">
@@ -217,7 +236,7 @@
                 </svg>
               </div>
               <h4>Need help searching?</h4>
-              <p>Tell us what you need and we’ll help you find the right unit.</p>
+              <p>Tell us what you need and we&rsquo;ll help you find the right unit.</p>
               <a href="index.html#contact">
                 Contact Sales
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -245,7 +264,7 @@
                   <option value="all">All</option>
                 </select>
 
-                <label for="sort-select" style="margin-left: 10px;">Sort by:</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select" aria-label="Sort inventory">
                   <option value="price_asc">Price: Low to High</option>
                   <option value="price_desc">Price: High to Low</option>
@@ -271,11 +290,11 @@
 
             <nav class="pagination" id="pagination" aria-label="Inventory pagination"></nav>
 
-            <!-- Compliance + transparency note (lightweight) -->
+            <!-- Compliance + transparency note -->
             <section class="section" style="padding: 40px 0 0;">
-              <div class="container" style="max-width: 900px;">
-                <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Compliance & Transparency</h2>
-                <p style="color: var(--color-gray-600);">
+              <div class="container" style="max-width: 900px; padding: 0;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Compliance &amp; Transparency</h2>
+                <p style="color: var(--color-gray-600); font-size: 0.94rem;">
                   We begin with a soft-pull credit pre-qualification. All programs are documented with clear terms including
                   pricing, responsibilities, and applicable return/option details. Inventory photos and specs are representative;
                   availability and final terms are confirmed at the time of booking or contract.
@@ -288,24 +307,23 @@
       </div>
     </section>
 
-    <!-- CTA footer -->
-    <section class="section section--gray" style="padding: 40px 0;">
-      <div class="container" style="text-align:center; max-width: 900px;">
-        <h2 style="margin-bottom: 10px;">Ready to move?</h2>
-        <p style="color: var(--color-gray-600); margin-bottom: 20px;">
-          Request a quote, browse inventory, or contact our team—serving owner-operators and fleets since 2017.
-        </p>
-        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-          <a class="btn btn-primary" href="index.html#contact">Request Quote</a>
-          <a class="btn btn-secondary" href="sales.html">View Inventory</a>
-          <a class="btn btn-secondary" href="index.html#contact">Contact</a>
+    <!-- ============ CTA BAND ============ -->
+    <section class="cta-band">
+      <div class="container">
+        <div class="reveal">
+          <h2>Didn&rsquo;t find <span class="accent">your unit?</span></h2>
+          <p>Inventory moves fast. Tell us what you&rsquo;re after and we&rsquo;ll let you know the moment the right truck or trailer lands on the lot.</p>
+        </div>
+        <div class="cta-actions reveal" data-delay="1">
+          <a href="index.html#contact" class="btn btn-primary btn-lg">Request a Quote</a>
+          <a href="index.html#programs" class="btn btn-ghost-light btn-lg">See Programs</a>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- Details Modal -->
+  <!-- ============ DETAILS MODAL ============ -->
   <div class="modal-overlay" id="details-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
     <div class="modal-container">
       <button class="modal-close" id="modal-close" aria-label="Close modal">
@@ -380,13 +398,13 @@
           </div>
 
           <div class="modal-actions">
-            <a href="index.html#contact" class="btn btn--primary btn--lg modal-contact-btn">
+            <a href="index.html#contact" class="btn btn-primary btn-lg modal-contact-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
               Contact About This Vehicle
             </a>
-            <button class="btn btn--secondary btn--lg" id="btn-print-details">
+            <button class="btn btn-secondary btn-lg" id="btn-print-details">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 6 2 18 2 18 9"></polyline>
                 <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
@@ -400,9 +418,10 @@
     </div>
   </div>
 
+  <!-- ============ FOOTER ============ -->
   <footer class="simple-footer">
     <div class="container">
-      <p>&copy; 2026 Right Truck Deal LLC. All rights reserved.</p>
+      <p>&copy; <span id="footer-year">2026</span> Right Truck Deal LLC. All rights reserved. &middot; righttruckdeal.us</p>
       <div class="simple-footer-links">
         <a href="index.html#compliance">Privacy Policy</a>
         <a href="index.html#compliance">Terms of Service</a>
