@@ -76,6 +76,12 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* Anchor targets land below the fixed navbar */
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + 20px);
 }
 
 body {
@@ -126,6 +132,33 @@ textarea {
 ::selection {
   background: var(--gold);
   color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 500;
+  padding: 12px 20px;
+  background: var(--ink);
+  color: var(--white);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 0.25s var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: none;
 }
 
 h1,
@@ -592,7 +625,6 @@ main {
 .hero-title {
   font-size: clamp(3rem, 8.5vw, 6.2rem);
   font-weight: 700;
-  max-width: 13ch;
   margin-bottom: 24px;
 }
 
@@ -656,6 +688,12 @@ main {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (max-height: 700px) {
+  .hero-scroll {
+    display: none;
   }
 }
 
@@ -1471,7 +1509,7 @@ main {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  background: var(--white);
+  background-color: var(--white);
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(232, 163, 60, 0.18);
 }
@@ -1479,6 +1517,16 @@ main {
 .form-group textarea {
   min-height: 130px;
   resize: vertical;
+}
+
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2355534d' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
 }
 
 .input-error {
@@ -2511,6 +2559,11 @@ main {
   display: flex;
   flex-direction: column;
   min-height: 320px;
+  min-width: 0;
+}
+
+.modal-details {
+  min-width: 0;
 }
 
 .gallery-main {
@@ -2668,7 +2721,7 @@ main {
 
 .modal-specs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-bottom: 24px;
 }
