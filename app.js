@@ -1836,11 +1836,18 @@ function initCountUp() {
 }
 
 function initYearsBadge() {
-  // "Years on the road" badge, computed from founding year
-  var el = document.getElementById('years-badge');
-  if (!el) return;
+  // "Years on the road" figures, computed from founding year
   var years = new Date().getFullYear() - 2017;
-  if (years > 0) el.textContent = years + '+';
+  if (years <= 0) return;
+
+  var badge = document.getElementById('years-badge');
+  if (badge) badge.textContent = years + '+';
+
+  var stat = document.getElementById('years-stat');
+  if (stat) {
+    stat.dataset.countTo = String(years);
+    stat.textContent = String(years);
+  }
 }
 
 // ============================================
