@@ -392,19 +392,69 @@ function initContactForm() {
     }
 
     if (isValid) {
-      const successMessage = document.createElement('div');
-      successMessage.className = 'success-message';
-      successMessage.innerHTML =
-        '<strong>Thank you!</strong> Your message has been sent successfully. We will get back to you within 24 hours.';
-      contactForm.insertBefore(successMessage, contactForm.firstChild);
-
-      contactForm.reset();
-
-      setTimeout(function () {
-        successMessage.remove();
-      }, 5000);
+      submitContactForm(contactForm);
     }
   });
+
+  function submitContactForm(form) {
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var originalLabel = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+    }
+
+    var endpoint = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+    var payload = {};
+    new FormData(form).forEach(function (value, key) {
+      payload[key] = value;
+    });
+
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (String(data.success) !== 'true') throw new Error(data.message || 'Send failed');
+        showFormNotice(
+          form,
+          'success-message',
+          '<strong>Thank you!</strong> Your request is on its way. We will get back to you within 24 hours.'
+        );
+        form.reset();
+      })
+      .catch(function () {
+        showFormNotice(
+          form,
+          'error-message form-error',
+          'We couldn’t send your request just now. Please email us directly at ' +
+            '<a href="mailto:info@righttruckdeal.us">info@righttruckdeal.us</a>.'
+        );
+      })
+      .finally(function () {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalLabel;
+        }
+      });
+  }
+
+  function showFormNotice(form, className, html) {
+    var existing = form.querySelector('.form-notice');
+    if (existing) existing.remove();
+
+    var notice = document.createElement('div');
+    notice.className = className + ' form-notice';
+    notice.innerHTML = html;
+    form.insertBefore(notice, form.firstChild);
+    notice.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+    if (className.indexOf('success') === 0) {
+      setTimeout(function () { notice.remove(); }, 8000);
+    }
+  }
 
   function showFieldError(field, message) {
     field.classList.add('input-error');
@@ -1835,6 +1885,40 @@ function initCountUp() {
   counters.forEach(function (el) { observer.observe(el); });
 }
 
+function initThemeToggle() {
+  var root = document.documentElement;
+  var toggles = document.querySelectorAll('.theme-toggle');
+  if (!toggles.length) return;
+
+  function apply(theme, persist) {
+    root.setAttribute('data-theme', theme);
+    toggles.forEach(function (btn) {
+      btn.setAttribute('aria-pressed', String(theme === 'dark'));
+    });
+    if (persist) {
+      try { localStorage.setItem('rtd-theme', theme); } catch (e) {}
+    }
+  }
+
+  apply(root.getAttribute('data-theme') || 'light', false);
+
+  toggles.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
+    });
+  });
+
+  // Follow system changes only while the visitor hasn't chosen explicitly
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  var onChange = function (e) {
+    var saved = null;
+    try { saved = localStorage.getItem('rtd-theme'); } catch (err) {}
+    if (!saved) apply(e.matches ? 'dark' : 'light', false);
+  };
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  else if (mq.addListener) mq.addListener(onChange);
+}
+
 function initYearsBadge() {
   // "Years on the road" figures, computed from founding year
   var years = new Date().getFullYear() - 2017;
@@ -1927,6 +2011,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initFAQ();
   initContactForm();
   initNavbarScrollState();
+  initThemeToggle();
   initScrollReveal();
   initCountUp();
   initYearsBadge();
